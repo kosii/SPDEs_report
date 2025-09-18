@@ -1,0 +1,388 @@
+\documentclass{report}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb}
+\usepackage{amsthm, thmtools}
+\usepackage{etoolbox}  % for hooking into environments
+\usepackage[shortlabels]{enumitem}
+\usepackage[parboxrestore]{marginnote}
+\usepackage{mathtools}
+\usepackage{changepage}
+\usepackage{cancel}
+\usepackage{faktor}
+\usepackage[protrusion=true,expansion=true]{microtype}	
+\usepackage{float}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{url}
+\usepackage{nameref}
+\usepackage{xspace}
+\usepackage{dsfont} % need it for \mathbb{1}
+\usepackage{dirtytalk}
+\usepackage[parfill]{parskip} % do not indent new paragraphs
+\usepackage[linktoc=all]{hyperref}
+% \usepackage{cleveref}
+
+\newcommand{\remarkautorefname}{Remark}
+
+\hypersetup{
+  linktoc=section,      % Only the number in the ToC is a link
+  colorlinks=true,
+  linkcolor=Blue,        % or any color you want
+  citecolor=Green,
+}
+
+% \usepackage[a4paper, top=2.5cm, bottom=3cm, left=3cm, right=2.5cm, portrait]{geometry}
+\usepackage{geometry}
+\geometry{a4paper, portrait
+%, margin=1.0in
+}
+
+% TEMPLATE STUFF
+\usepackage{fancyhdr}
+
+\usepackage{titlesec}
+\titleformat{\chapter}{\bfseries\sffamily}{\huge\Roman{chapter}.}{10pt}{\huge}
+\titlespacing*{\chapter}{0pt}{5.5ex plus 1ex minus .2ex}{1.3ex plus .2ex}
+\titleclass{\chapter}{straight}
+
+\usepackage[
+    backend=biber,
+    style=alphabetic,
+    sorting=ynt
+]{biblatex}
+\addbibresource{references.bib}
+
+\makeatletter
+\renewcommand*\env@matrix[1][\arraystretch]{%
+  \edef\arraystretch{#1}%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{*\c@MaxMatrixCols c}}
+\makeatother
+
+\newcommand{\FF}{\mathbb{F}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\NO}{{\mathbb{N}_0}}
+\newcommand{\NP}{\mathbb{N}_+}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\KK}{\mathbb{K}}
+
+\DeclarePairedDelimiter\abs{\lvert}{\rvert} %NOTE: \abs* gives auto-sizing
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}%
+% \DeclarePairedDelimiter\norm\lVert\rVert
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+% \DeclareMathOperator{\Var}{Var}
+\newcommand{\Var}[1]{\operatorname{Var}\left(#1\right)}
+\newcommand{\Exp}[1]{\mathbb{E}\left[#1\right]}
+\newcommand{\CondExp}[2]{\mathbb{E}\left[#1 \mid #2\right]}
+\newcommand{\DefEmph}[1]{\textbf{#1}} 
+\newcommand{\Cov}[2]{\operatorname{Cov}\left(#1, #2\right)} 
+\newcommand{\Corr}[2]{\operatorname{Corr}\left(#1, #2\right)}
+\newcommand{\CharFunction}[1]{\mathds{1}_{#1}}
+\newcommand{\Restrict}[2]{\left. #1 \right|_{#2}}
+\newcommand{\ScalarProd}[2]{\left\langle #1, #2 \right\rangle}
+\newcommand{\Placeholder}{\,\mathrel{\cdot}\,}
+\DeclareMathOperator{\ProjOp}{\mathbf{P}}
+\newcommand{\Convolve}[2]{#1 \star #2}
+
+\DeclareMathOperator{\DConv}{\stackrel{(d)}{\longrightarrow}}
+\DeclareMathOperator{\PConv}{\stackrel{\PP}{\longrightarrow}}
+\DeclareMathOperator{\DEquiv}{\stackrel{(d)}{=}}
+\DeclareMathOperator{\DefiningEquality}{\coloneqq}
+\DeclareMathOperator{\DefiningEqualityRev}{\eqqcolon}
+\DeclareMathOperator{\Union}{\cup}
+\DeclareMathOperator{\DisUnion}{\dot{\cup}}
+\DeclareMathOperator{\Intersection}{\cap}
+\DeclareMathOperator{\Range}{ran}
+\DeclareMathOperator{\Support}{supp}
+
+
+
+% \DeclareMathOperator{\dist}{dist}
+% \DeclareMathOperator{\weight}{weight}
+
+\swapnumbers % optional, of course
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\renewenvironment{proof}{{\bf \emph{Proof:} }}{\hfill $\Box$ \\} 
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\AtBeginEnvironment{remark}{
+  \pushQED{\qed}\renewcommand{\qedsymbol}{$\lrcorner$}%
+}
+\AtEndEnvironment{remark}{\popQED}
+
+
+\AtBeginEnvironment{example}{%
+  \pushQED{\qed}\renewcommand{\qedsymbol}{$\scriptstyle\triangle$}%
+}
+\AtEndEnvironment{example}{\popQED}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}{Example}[section]
+
+
+\newcommand{\thistheoremname}{}
+
+\newtheorem{genericthm}[theorem]{\thistheoremname}
+\newenvironment{namedthm}[1]
+  {\renewcommand{\thistheoremname}{#1}%
+   \begin{genericthm}}
+  {\end{genericthm}}
+
+
+\DeclareRobustCommand{\rchi}{{\mathpalette\irchi\relax}}
+\newcommand{\irchi}[2]{\raisebox{\depth}{$#1\chi$}} % inner command, used by \rchi
+\newcommand{\iid}{\text{i.i.d}\xspace}
+
+\let\oldphi\phi
+\let\phi\varphi
+
+\let\oldrho\rho
+\let\rho\varrho
+
+\let\oldepsilon\epsilon
+\let\epsilon\varepsilon
+
+\renewcommand{\chapterautorefname}{Chapter}
+\renewcommand{\sectionautorefname}{Section}
+\renewcommand{\subsectionautorefname}{Subsection}
+\renewcommand{\subsubsectionautorefname}{Subsubsection}
+\renewcommand{\figureautorefname}{Figure}
+\renewcommand{\tableautorefname}{Table}
+\renewcommand*{\equationautorefname}{\!} % effectively hides "Equation"
+\newcommand{\fullref}[1]{\autoref{#1}~(\nameref{#1})}
+
+\title{\textsc{Convergence of the Two-Dimensional Dynamic Ising-Kac Model to $\Phi^4_2$}
+\\[1.5em]
+{\small {for}}\\[1.5em]
+{\Large \textsc{Stochastic Partial Differential Equations: \\Classical and New}}\\
+{\large (Dr. Guilherme de Lima Feltes)}}
+
+\author{
+    \textsc{Balázs Kossovics}\\
+    {\small (Matr. 5563286)}
+}
+\date{2025 Summer Semester}
+
+
+\begin{document}
+
+\maketitle
+
+\newpage
+\setcounter{page}{2}
+
+\tableofcontents
+
+\chapter{Introducion}
+The Ising model is a model of ferromagnetism. On the microscopic level we consider a discrete system of interacting particles on the $\Lambda_N = \ZZ^2 / (2N+1)\ZZ^2$ grid for some $N \in \NN$, where in every grid point sits a spin with exactly two possible state: $\pm1$ (intuitively:  the spint pointing in the direction of either the north or the south). The set of corresponding spin configurations will be denoted by $\Sigma_N = \left\{-1, 1\right\}^{\Lambda_N}$. In the standard Ising model the particles are interacting with their 4 immediate neighbours, while in the Ising-Kac model the particles can influence the behaviour of the other particles in a small radius of $\gamma \gg N^{-1}$. In order to describe the interaction, we choose an arbitrary kernel $\mathfrak{K}: \RR^2 \to [0, 1]$ satisfying $\mathfrak{K}(0) = 0$, $\mathfrak{K} \in \mathcal{C}^2$, $\Support{\mathfrak{K}} \subset B^2(0, 3) \DefiningEquality \left\{x \in \RR^2 \colon \abs{x} < 3\right\}$, invariant under rotations and having furthermore $$\int_{\RR^2} \mathfrak{K}(x) dx = 1\,,\quad \int_{\RR^2} \mathfrak{K}(x) \abs{x}^2 dx = 4\,.$$
+
+
+For a scaling factor $0 < \gamma < \frac{1}{3}$ (on which $N$ depends, as we will later see), we define a discretized version  of the kernel as 
+$$\kappa_\gamma: \Lambda_N \to [0, 1]\,,\quad\kappa_\gamma(k) = \frac{\mathfrak{K}(\gamma k)}{\sum_{l \in \Lambda_N} \mathfrak{K}(\gamma l)}~(k \in \Lambda_N)\,,$$
+which acts as a mollifier on the grid to define the locally averaged field for any $\sigma \in \Sigma_N$ configuration through discrete convolution as \begin{align}
+  h_\gamma(\sigma, k) \DefiningEquality (\Convolve{\kappa_\gamma}{\sigma})(k) \DefiningEquality  \sum_{l\in \Lambda_N} \kappa_\gamma(k-l) \sigma(l)\,.
+\end{align}
+
+
+
+\begin{itemize}
+  \item variant of the ferromagnetic Ising model
+  \begin{itemize}
+    \item Ising-Kac: not only closest neighborhood interactions, but in a small radius of $\gamma^{-1}$
+    \item using Glauber dynamics for the jump probabilities
+    \item "random fluctuations of a \[...\] magnetisation field $X_\gamma$ in the limit $\gamma \to 0$, for inverse temperature close to the critical temperature of the mean field model" 
+    \item ~"under suitable assumptions [...] these fields converge in law to the solution of the $\Phi^4_2$ equation"
+  \end{itemize}
+  \item $\Phi^4_2$ is ill defined, solution theory is more "intricate" (p1) (than that of $\Phi^4_1$)
+  \begin{itemize}
+    \item solution is at best as good as the stochastic convolution term, no "consistent" definition of the term $X^3$,
+    \item renormalization needed, so instead of $$\partial_t X(t, x) = \Delta X(t, x) - \frac{1}{3} X^3(t, x) + A X(t, x) + \sqrt{2}\xi(t, x)$$we formally solve $$\partial_t X(t, x) = \Delta X(t, x) - \frac{1}{3} (X^3(t, x) - 3 \infty \times X(t, x))+ A X(t, x) + \sqrt{2}\xi(t, x)$$(for the solution theory see Perkowski, or directly da Prato-Debussche)
+    \item other solution theory, which allows to solve much more singular SPDEs, motivation: "to show that fluctuations of non-linear particle systems are governed by such an equation". 
+  \end{itemize}
+  \item interesting feature of the result: "it gives a natural interpretation for the infinite renormalisation constant as a shift of critical temperature away from its mean field value"
+  \item use of the Kac-type interactions prevents the model from converging to the continuous Ising model
+\end{itemize}
+\chapter{Setting and main result}
+\begin{itemize}
+  \item microscopic system
+  \begin{itemize}
+    \item the setting on $\Lambda_N = \mathbb{Z}^2 / (2N + 1)\mathbb{Z}^2$ is quite clear
+    \begin{itemize}
+      \item except some constraints on the kernel:
+      \begin{itemize}
+        \item supported on a ball of radius 3 (I guess to make it interesting enough?)
+        \item why do we have $\mathfrak{K}(0) = 0$  (to avoid self interactions? if we didn't have this, then the mean field would be a constant higher or lower, no?)
+      \end{itemize}
+    \end{itemize}
+    \item locally averaged field $\to$ Hamiltonian $\to$ Gibbs measure $\to$ Glauber dynamics $\to$ $(\sigma_t)_{t\ge 0}$ pure jump Markov process on $\Sigma_N$ describing the evolution of the spin configurations, and the corresponding $h_\gamma(\sigma)$ local mean field
+    \item (Le Gall): $h_\gamma(t, k) = h_\gamma(0, k) + \int_0^t \mathcal{L} h_\gamma(s, k)\,ds + m_\gamma(t, k)$, where $(m_\gamma(t, k))_{t \ge 0}$ is a martingale for all $k \in \Lambda_N$. The [[predictable quadratic covariation]] of the martingale are given in $(2.10)$.
+    \begin{itemize}
+      \item note: if we discretized the time and we interpreted $\mathcal{L}$ as $P-I$ operator, then it's clear why $m$ is a martingale.
+    \end{itemize}
+  \end{itemize}
+  \item macroscopic coordinates:
+  \begin{itemize}
+    \item we rescale time, space and amplitude by factors $\alpha$, $\epsilon$ and $\delta$, respectively, and by considering the evolution equation after the coordinate change we obtain the right factors so that the leading terms have coefficient 1 in the rescaled equation.
+    \item this gives a guess for the inverse temperature, but the trivial guess (O(1)) is incorrect as already observed in [10]
+    \begin{itemize}
+      \item in the same paper they say \say{The origin of the Wick regularization in the limit theory is then explained in terms of the critical temperature shift found in Theorem 1.1, which is in fact recognized as the microscopic origin of the Wick regularization.}
+      \item instead we choose something that such that the term $\frac{\beta -1}{\alpha} = \mathfrak{c}_\gamma +A$ where $A$ is fixed and $\mathfrak{c}_\gamma = \Theta(\log{\gamma^{-1}})$. "The extra term $\mathfrak{c}_\gamma$ reflects the fact that the limiting equation has to be renormalized" (p7)
+    \end{itemize}
+  \end{itemize}
+  \item extension of functions given on the macroscopic coordinates to the whole $\mathbb{T}^2$:
+  \begin{itemize}
+    \item discrete Fourier transform on discrete coordinates, then inverse Fourier transform on the whole $\mathbb{T}^2$ $\textcolor{red}{\text{Q: why do we get something real valued here}}$   
+    \begin{itemize}
+      \item the extension will coincide with the original function on the discrete points
+      \item extension is compatible with known results: well behavedness with respect to convolution and Parseval.
+    \end{itemize}
+  \end{itemize}
+  \item main result:
+  \begin{itemize}
+    \item $\mathcal{D}(\mathbb{R}_+, \mathcal{S})$: $\mathcal{S}$ metric space-valued càdlàg functions on $\mathbb{R}_+$ endowed with the Skorokhod topology
+    \item $\mathcal{C}^{-\nu}~(\nu > 0)$ Besov space, with the def Perkowski used!
+    \item just state Theorem 2.1
+  \end{itemize}
+\end{itemize}
+\chapter{Solution theory of $\Phi^4_2$}
+\begin{itemize}
+  \item linearized solution $\tilde{X}$ lies in $\mathcal{C}^-$, so no way to interpret $\tilde{X}^3$ consistently, and no hope that the solution of the non-linear equation is any more regular
+  \begin{itemize}
+    \item Perkowski had a slightly different argument, claiming that the solution is not better than the stochastic convolution, but I think it's pretty much the same
+    \item on the other hand if we spatially regularized the white noise by $$W_\epsilon(t, x) = \frac{1}{4}\sum_{\lvert k \rvert < \epsilon^{-1}} e^{i \pi k \cdot x}\hat{W}(k, t) = \mathcal{F}^{-1}_{\mathbb{T}^2}(\varphi_\epsilon \mathcal{F}_{\mathbb{T}^2}W(t, \cdot))(x)$$then the solution $X_\epsilon$ of $$dX_\epsilon = (\delta X_\epsilon - \frac{1}{3} X^3_\epsilon + A X_\epsilon) dt + \sqrt{2} dW_\epsilon$$converges in probability to $0$
+    \item for the record, $Z_\epsilon(t, \cdot) = \int_0^t P_{t-s} dW_\epsilon(s, \cdot)$ is the same as localizing the heat kernel and convolving it with $dW$, which is again the same as spatially localizing the stochastic convolution (think about the Fourier cutoff projector as a self-adjoint linear operator, thus we can pull it in, by considering how the stochastic convolution acts on test functions)
+    \item in order to obtain a nontrivial limit, we have to adjust the above approximation by adding a linear term with logarithmically diverging coefficient $\mathfrak{c}_\epsilon = \sum_{0 < |k| < \epsilon^{-1}}\frac{1}{4\pi^2 | k|^2}$.
+  \end{itemize}
+  \item Consider the mild solution $Z_\epsilon(t, \cdot) = \int_0^t P_{t-s} dW_\epsilon(s, \cdot)$ of the linearized equation. We can define $Z_\epsilon^n$ but this won't converge for $n \ge 2$. Instead of that we consider $Z^{:n:}_\epsilon(t, \cdot) = H_n(Z(t, \cdot), \mathfrak{c}_\epsilon)$ which will converge as $\epsilon \to 0$ with 
+\end{itemize}
+
+\chapter{Bounds for the linearized system}
+\begin{itemize}
+  \item we consider the mild solution of the linearized evolution $$\begin{aligned}dZ_\gamma(t, x) &= \Delta_\gamma Z_\gamma(t, x) dt + dM_\gamma(t, x)\\Z_\gamma(0, x) &= 0 \end{aligned}$$which is $Z_\gamma(t, x) = \int_{r=0}^t P^\gamma_{t-s} dM_\gamma(s, x)$, where $P^\gamma_t = e^{\Delta_\gamma t}$ is the semigroup generated by $\Delta_\gamma X = \frac{\gamma^2}{\epsilon^2}(K_\gamma \star_\epsilon X - X)$. 
+  \item we define $R_{\gamma, t}(s, x) := \int_{r=0}^s P^\gamma_{t-r} dM_\gamma(r, x)~(x \in \Lambda_\epsilon)$  which we can extend to trigonometric polynomials the usual way. This is an integral against a [[càdlàg]] martingale, thus $R_{\gamma ,t}$ is also a [[càdlàg]] martingale for all $x \in \mathbb{T}^2$
+  \begin{itemize}
+    \item we recursively define $R_{\gamma, t}^{:1:} := R_{\gamma, t}$ and $R_{\gamma, t}^{:n:}(s,x) := n\int_{r=0}^s R_{\gamma, t}^{:n-1:}(r^-,x) \,dR_{\gamma, t}(r, x)$, where $r^-$ is the left limit (to make the integrand predictable, which is necessary for integration against cadlag martingales (to make the integral a martingale again))
+    \begin{itemize}
+      \item in order to extend $R_{\gamma, t}^{:n:}$ to $\mathbb{T}^2$, we don't just use trig polys, but we consider the Fourier series $$\hat{R}_{\gamma, t}^{:n:}(s,x) = \frac{1}{4}n\int_{r=0}^s R_{\gamma, t}^{:n-1:}(r^-,x) \,dR_{\gamma, t}(r, x)$$and let $R_{\gamma, t}^{:n:}(s, x) = \frac{1}{4} \sum_{k \in \mathbb{Z}^2} \hat{R}^{:n:}_{\gamma, t}(s, k)e^{i \pi k \cdot x}$.
+    \end{itemize}
+    \item we can now define $Z^{:n:}_\gamma(t, x) = R^{:n:}_{\gamma, t}(t, x)$
+  \end{itemize}
+  \item the goal of this section to obtain bounds on the above quantities. The difficulty is that now we don't have access to Gaussian noise, so no gaussian hypercontractivity (Thm 4.21 in Perkowski) (I guess this is what called Nelson's estimate in this paper). One can replace this with BDG inequality + controlling the jumps (p12, par(-1)).
+  \begin{itemize}
+    \item Lemma 4.1: $$\mathbb{E}\left[\sup_{0\le r \le t} |\mathfrak{I}_n F(r)|^p\right]^{p/2} < \infty$$and actually it gives a much more precise bound, but maybe it'd be more interesting to state this bound for the exact $F$ we are applying it, and $\mathfrak{I}_n$ is just the $n^\text{th}$ iterated Wiener-Itô integral.
+    \item Proposition 4.2: from the previous lemma we can obtain for some $\gamma_0 > 0$, that for every $n\in \mathbb{N}, p \ge 1, \nu > 0, T> 0, 0 \le \lambda \le 1/2, 0 < \kappa \le 1$ there is a constant $C = C(n, p, \nu, T, \lambda, \kappa)$ such that for every $0 \le s \le t \le T$ and $0 < \gamma < \gamma_0$:
+    \begin{itemize}
+      \item $\lVert Z^{:n:}_\gamma(t, \cdot) \rVert^p_{\mathcal{C}^{-\nu - 2\lambda}} \le C t^{\gamma p} + C \gamma^{p(1-\kappa)}$ 
+      \item $\lVert Z^{:n:}_\gamma(t, \cdot) - Z^{:n:}_\gamma(s, \cdot) \rVert^p_{\mathcal{C}^{-\nu - 2\lambda}} \le C \lvert t- s\rvert^{\gamma p} + C \gamma^{p(1-\kappa)}$ 
+      \item $\lVert Z^{:n:}_\gamma(t, \cdot) - R^{:n:}_{\gamma, t}(s, \cdot) \rVert^p_{\mathcal{C}^{-\nu - 2\lambda}} \le C \lvert t- s\rvert^{\gamma p} + C \gamma^{p(1-\kappa)}$ (these are some weaker bound coming from the main claim, but we'll use it in this form. it's unclear so far how the previous lemma was used in this theorem)
+    \end{itemize}
+    \item Lemmas 4.4, 4.5 are for proposition 4.2
+    \item Lemma 4.6 seems to be interesting and important: it reflects the fact that Proposition 4.2 is a bit too rough as an estimate, and we can give a much better estimate on the high frequencies of $Z_\gamma$ defined as $Z_\gamma^{\text{high}}(t, x)$:
+  \end{itemize}
+\end{itemize}
+\chapter{Tightness for the linearized system}
+\begin{itemize}
+  \item Discussion of the terms $Z_\gamma^{:n:}$ and $R_{\gamma, t}^{:n:}$ is continued. After having obtained bounds on the goodness of the approximation in Prop 4.2, we give additional bounds related to the [[predictable quadratic variation]]s (for $M$ [[càdlàg]] $L^2$ martingale it's the unique $\langle M \rangle$ making $M^2 -  \langle M \rangle$ into a martingale) and the [[bracket process]] $[M]_t = M^2_t - 2\int_0^t M(s^-)dM(s)$, namely
+  \begin{itemize}
+    \item a bound on their differences
+    \item a bound on the $L^p$ norm of the $\sup_{x \in \Lambda_\epsilon} [R_{\gamma, t}(\cdot, x)]$ 
+  \end{itemize}
+  \item we define now $E^{:n:}_{\gamma, t}(s, x) = H_n(R_{\gamma, t}(s, x), [R_{\gamma, t}(\cdot, x)]_s) - R^{:n:}_{\gamma, t}(s, x)~(x\in \mathbb{T}^2)$ where $[R_{\gamma, t}(\cdot, x)]_s$ is the trig extension of $[R_{\gamma, t}(\cdot, x)]_s$. The claim of Proposition 5.3 is that we can approximate $R^{:n:}_{\gamma, t}(s, x)$ as a Hermite polynomial with the following error bound:$$\mathbb{E}[\sup_{x\in\mathbb{T}^2}\sup_{0\le s \le t} \lvert E^{:n:}_{\gamma, t}(s, x)\rvert^p]^{1/p} \le C \gamma^{1 - \kappa}$$
+  \begin{itemize}
+    \item does this imply that for some $x$ the minimum error is not necessarily obtained for $s = t$?
+    \item for $x\in \Lambda_{\epsilon}$ is the error $0$? I guess not, since then from Lemma A.6 the whole error would be 0
+  \end{itemize}
+  \item this allows us to conclude the tightness of the processes $Z^{:n:}_\gamma$ on $\mathcal{D}(\mathbb{R}_+, \mathcal{C}^{-\nu})$, which according to Billingsley implies relative compactness. In order to prove tightness, it's enough to prove that the family is tight when restricted to every compact time interval. The statement precisely:
+  \begin{itemize}
+    \item For any fixed $n\in \mathbb{N}$ and any $\nu > 0$, the family $\left\{Z^{:n:}_{\gamma}, \gamma \in (0, 1/3) \right\}$ is tight on $\mathcal{D}(\mathbb{R}_+, \mathcal{C}^{-\nu})$. Any weak limit is supported on $\mathcal{C}(\mathbb{R}_+, \mathcal{C}^{-\nu})$. Furthermore, for any $p \ge 1$ and $T > 0$, we have $$\sup_{\gamma \in (0, 1/3)} \mathbb{E}\left[ \sup_{0 \le t \le T} \lVert Z^{:n:}_\gamma(t, \cdot)\rVert^p_{\mathcal{C}^{-\nu}} \right] < \infty$$
+    \item some interesting points of the proof:
+    \begin{itemize}
+      \item WLOG $\gamma \in (0, \gamma_0)$, we fix $T$, and we prove tightness on $\mathcal{D}([0, T], \mathcal{C}^{-\nu})$
+      \item let $m \in \mathbb{N}$ be fixed later, $p \ge 1, \nu^\prime > 0, \lambda \le (2m)^{-1}$ and $n \in \mathbb{N}$. Then from Proposition 4.2. (in particular claim (4.19) and its consequence Remark 4.3) we have $$\mathbb{E}\left[ \lVert Z_\gamma^{:n:}(t, \cdot) - Z_\gamma^{:n:}(s, \cdot)\rVert^p_{\mathcal{C}^{-\nu^\prime -2\lambda}} \right]\le C\lvert t-s \rvert^{\lambda p}$$
+      \begin{itemize}
+        \item on the other hand: we discretize time: consider $\gamma^m \mathbb{N}_0$  times and we approximate linearly $Z_\gamma^{:n:}$ on this grid. for the linear approximation $\tilde{Z}_\gamma^{:n:}$ we apparently also have $$\mathbb{E}\left[ \lVert \tilde{Z}_\gamma^{:n:}(t, \cdot) - \tilde{Z}_\gamma^{:n:}(s, \cdot)\rVert^p_{\mathcal{C}^{-\nu^\prime -2\lambda}} \right]\le C\lvert t-s \rvert^{\lambda p}$$from the construction of $\tilde{Z}_\gamma^{:n:}$, so we can apply the sufficient Kolmogorov-Chentsov criterion for tightness (Corollary 14.9 form Kallenberg), from which the desired properties follow for $\tilde{Z}^{:n:}_\gamma$
+      \end{itemize}
+      \item now we set up a bound $$\mathbb{E}\left[ \sup_{0 \le t \le T} \sup_{x \in \mathbb{T}^2} \lvert \tilde{Z}^{:n:}_\gamma(t, x) - {Z}^{:n:}_\gamma(t, x) \rvert^p \right]\le C(n, p, T, \kappa) \gamma^{(1-\kappa)p}$$from which we can transfer the properties form $\tilde{Z}^{:n:}_\gamma$ to ${Z}^{:n:}_\gamma$.
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+\chapter{Convergence in law of the linearised system}
+\begin{itemize}
+  \item goal is to show that $Z_\gamma$ converges to $Z$ in law, and so do $Z_\gamma^{:n:}$ to $Z^{:n:}$. Problem: we can only do this up to a stopping time which depends on $X_\gamma$, the non-linear dynamics, about which we know yet nothing. For any $\nu \in (0, 1/2), \mathfrak{m} > 1$ and $0 < \gamma < 1$, let$$\tau_{\gamma, \mathfrak{m}} = \inf \left\{ t \ge 0 : \lVert X_\gamma(t, \cdot) \rVert_{\mathcal{C}^{-\nu}} \ge \mathfrak{m}\right\}$$and we set up $\sigma_{\gamma, \mathfrak{m}}(t, k)$ which is the same as $\sigma(t, k)$ up until $\tau_{\gamma, \mathfrak{m}}$, and essentially random afterwards ("jumps occurring for every $t > \tau_{\gamma, \mathfrak{m}}/\alpha$ and every $k\in \Lambda_N$ at rate $1/2$, independently from $\sigma$"). We construct the rest the same, $\sigma$ replaced by $\sigma_{\gamma, \mathfrak{m}}$, and all the properties hold, since the only property of jump rates were that they are $\le 1$, and this still holds.
+  \item Main theorems of this section:
+  \begin{enumerate}
+    \item Let $\nu \in (0, 1/2)$ and $\mathfrak{m} > 1$. As $\gamma$ tends to $0$, the process $Z_{\gamma, \mathfrak{m}}$ converges in law to $Z$ with respect to the Skorokhod topology on $\mathcal{D}(\mathbb{R}_+, \mathcal{C}^{-\nu})$, where $Z$ is defined in Proposition 3.1 ("the stochastic convolution"), where the main idea of the proof is
+    \begin{itemize}
+      \item Since all the previous properties of the previously constructed objects still remains true for the newly constructed process, so in particular we have tightness. Consider any subsequential limit $\bar{Z}$. From the martingale characterization of the solution of the stochastic heat equation we can see that $Z = \bar{Z}$.
+    \end{itemize}
+    \item (Convergence of $Z_\gamma^{:n:}$). For every $\mathfrak{m} \in \mathbb{N}$ and $n \in \mathbb{N}$, the processes $(Z_{\gamma, \mathfrak{m}}^{:1:}, \ldots, Z_{\gamma, \mathfrak{m}}^{:n:})$ converge (jointly) in law to $(Z^{:1:}, \ldots, Z^{:n:})$ with respect to the topology of $\mathcal{D}(\mathbb{R}_+, \mathcal{C}^{-\nu})^n$.
+    \begin{itemize}
+      \item the proof idea is to show it through the convergence of finite dimensional distributions (look up the exact result in Billingsley)
+      \item Lemma A.6 is used again for convergence on non-grid points (but maybe in an argument that I won't even present)
+    \end{itemize}
+  \end{enumerate}
+  \item Questions
+  \begin{itemize}
+    \item So does this converge in law to $Z$, because for any $\mathfrak{m} >1$ we have that $\tau_{\gamma, \mathfrak{m}} \to \infty$ as $\gamma \to 0$?
+    \item Do we already have that $X_{\gamma, \mathfrak{m}}$ converges to $X$ in law?
+  \end{itemize}
+\end{itemize}
+\chapter{Analysis of the non-linear equation}
+We consider $\nu > 0$ small enough and fixed, and some initial data $X^0 \in \mathcal{C}^{-\nu}$ also fixed throughout the section. We denote $X \in \mathcal{C}(\mathbb{R}_+, \mathcal{C})$ the solution of the renormalized $\Phi^4_2$ equation as constructed in Section 3.
+
+We denoted with $X_\gamma$ the rescaled field and it satisfied the evolution equation on the points of $\Lambda_\epsilon$. The problem is that it's not true anymore for $\mathbb{T}^2 \setminus \Lambda_\epsilon$ (since Ext does not commute with cubing), so we have to derive a new equation.
+\begin{itemize}
+  \item this is done in Lemma 7.1, with a new error term $\operatorname{Err}^{(1)}(s, \cdot)$, which is bounded by something for which it's not immediately clear that converges to $0$ as $\gamma \to 0$ (at least to me ), and in particular that bound is random (because)
+  \item After this technical lemma, we construct a new process:
+  \begin{itemize}
+    \item in the evolution equation we replace $Z_\gamma$ with $Z_{\gamma, \mathfrak{m}}$ and $\operatorname{Err}^{(1)}$ with $\operatorname{Err}^{(1)}_\mathfrak{m}(s) = \begin{cases}\operatorname{Err}^{(1)}(s)&s \le \tau_{\gamma, \mathfrak{m}}\\ 0 &\text{otherwise}\end{cases}$  and consider a solution $X_{\gamma, \mathfrak{m}}$, which  exists from an elementary ODE argument 
+    \begin{itemize}
+      \item $\textcolor{red}{\text{fixpoint argument? does the solution exists for the whole } \mathbb{R}_+ \text{ almost surely?}}$  
+    \end{itemize}
+    \item in particular the $X_{\gamma, \mathfrak{m}} = X_\gamma$ on the event $\left\{ t < \tau_{\gamma, \mathfrak{m}}\right\}$ 
+    \begin{itemize}
+      \item $\textcolor{red}{\text{why not with }\le\text{?}}$ 
+      \item using this fact we can apply the previous error bound to $\operatorname{Err}^{(1)}_\mathfrak{m}$  up to $\tau_{\gamma, \mathfrak{m}}$, after which the error is simply $0$.
+    \end{itemize}
+  \end{itemize}
+  \item We construct another approximation of $X_\gamma$. For $0 \le t \le T$ we define:$$\overline{X}_{\gamma, \mathfrak{m}}(t, \cdot) = P_t X^0 + Z_{\gamma, \mathfrak{m}}(t, \cdot) + \mathcal{S}_T(Z_{\gamma, \mathfrak{m}}, Z^{:2:}_{\gamma, \mathfrak{m}}, Z_{\gamma, \mathfrak{m}}^{:3:})(t, \cdot)$$where $\mathcal{S}_T$ is the solution operator for some fixed $X^0$ initial datum. 
+  \begin{itemize}
+    \item so here $\overline{X}_{\gamma, \mathfrak{m}}$ is the solution of the following SPDE: $\textcolor{red}{\text{figure this out!}}$ 
+    \item in Lemma 7.2 we have: $\overline{X}_{\gamma, \mathfrak{m}}$ converges to $X$ with respect to $\mathcal{D}([0, T], \mathcal{C}^{-\nu})$, where in particular we use the uniform bounds bounds from Proposition 5.4, so that the paths of $Z_{\gamma, \mathfrak{m}}^{:i:}$ are almost surely bounded. But in the end this is just a use of the continuous mapping theorem
+  \end{itemize}
+  \item Now we want to bound the difference between $\overline{X}_{\gamma, \mathfrak{m}}$ (the result got from the solution operator $\mathcal{S}_T$) and $X_\gamma$ (the process from the evolution equation, we can also eventually consider $X_{\gamma, \mathfrak{m}}$, if it's more advantageous). The main goal of the remaining is to obtain the following bound for every fixed $\mathfrak{m} \ge 1, T > 0$ and bounded uniformly continuous function $F: \mathcal{D}([0, T], \mathcal{C}^{-\nu}) \to \mathbb{R}$: $$\limsup_{\gamma \to 0} \mathbb{E}\left[\lvert F(\overline{X}_{\gamma, \mathfrak{m}}) - F({X}_{\gamma, \mathfrak{m}})\rvert\right] = 0\,.$$Combined with Lemma 7.2 we immediately get the convergence of ${X}_{\gamma, \mathfrak{m}}$ to $X$ in law for every fixed $\mathfrak{m} \ge 1$ (p49). This is proven in Lemmas 7.3, 7.4, 7.5
+\end{itemize}
+\chapter{Appendices}
+\begin{itemize}
+  \item Theorem C1: characterization of the solution of the stochastic heat equation through the uniqueness of the martingale problem (it's used in section 6)
+  \item Mention at A.6 at a convenient point, it seems to be an important thing, especially 
+\end{itemize}
+
+
+\chapter{Remarks}
+\section{Important notes from Billingsley}
+\begin{itemize}
+  \item If $\Pi$ family of probability measures is tight, then it's relatively compact.
+\end{itemize}
+\section{Points to observe}
+\begin{itemize}
+  \item for parameter $\kappa$ we only require arbitrary $> 0$, but form the type of estimates we get actually only $\kappa \in (0, 1)$ would make sense.
+  \item we often restrict ourselves to $\gamma \in (0, \gamma_0)$, where $\gamma_0$ is coming from Lemma 8.2 and Proposition 4.2
+\end{itemize}
+
+% \medskip
+\newpage
+% Bibliography can go on the same page with the appendix.
+\printbibliography
+\end{document}
