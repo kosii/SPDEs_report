@@ -69,6 +69,7 @@
 \newcommand{\QQ}{\mathbb{Q}}
 \newcommand{\CC}{\mathbb{C}}
 \newcommand{\KK}{\mathbb{K}}
+\newcommand{\TT}{\mathbb{T}}
 
 \DeclarePairedDelimiter\abs{\lvert}{\rvert} %NOTE: \abs* gives auto-sizing
 \DeclarePairedDelimiter\norm{\lVert}{\rVert}%
@@ -88,7 +89,7 @@
 \newcommand{\ScalarProd}[2]{\left\langle #1, #2 \right\rangle}
 \newcommand{\Placeholder}{\,\mathrel{\cdot}\,}
 \DeclareMathOperator{\ProjOp}{\mathbf{P}}
-\newcommand{\Convolve}[2]{#1 \star #2}
+\newcommand{\Convolve}[3][]{#2 \star_{#1} #3}
 
 \DeclareMathOperator{\DConv}{\stackrel{(d)}{\longrightarrow}}
 \DeclareMathOperator{\PConv}{\stackrel{\PP}{\longrightarrow}}
@@ -143,6 +144,7 @@
 \DeclareRobustCommand{\rchi}{{\mathpalette\irchi\relax}}
 \newcommand{\irchi}[2]{\raisebox{\depth}{$#1\chi$}} % inner command, used by \rchi
 \newcommand{\iid}{\text{i.i.d}\xspace}
+\newcommand{\TODO}[1]{\text{\textcolor{red}{TODO: #1}}\xspace}
 
 \let\oldphi\phi
 \let\phi\varphi
@@ -161,6 +163,25 @@
 \renewcommand{\tableautorefname}{Table}
 \renewcommand*{\equationautorefname}{\!} % effectively hides "Equation"
 \newcommand{\fullref}[1]{\autoref{#1}~(\nameref{#1})}
+
+\newcommand{\bigO}[1]{\ensuremath{\mathop{}\mathopen{}\mathcal{O}\mathopen{}\left(#1\right)}}
+
+\newcommand\smallO[1]{
+    \mathchoice
+    {% mode \displaystyle
+      \scriptstyle\mathcal{O}\left(#1\right)
+    }
+    {% mode \textstyle
+      \scriptstyle\mathcal{O}\left(#1\right)
+    }
+    {% mode \scriptstyle
+      \scriptscriptstyle\mathcal{O}\left(#1\right)
+    }
+    {% mode \scriptscriptstyle
+      \scalebox{0.8}{$\scriptscriptstyle\mathcal{O}$}\left(#1\right)
+    }
+}
+
 
 \title{\textsc{Convergence of the Two-Dimensional Dynamic Ising-Kac Model to $\Phi^4_2$}
 \\[1.5em]
@@ -185,16 +206,66 @@
 \tableofcontents
 
 \chapter{Introducion}
-The Ising model is a model of ferromagnetism. On the microscopic level we consider a discrete system of interacting particles on the $\Lambda_N = \ZZ^2 / (2N+1)\ZZ^2$ grid for some $N \in \NN$, where in every grid point sits a spin with exactly two possible state: $\pm1$ (intuitively:  the spint pointing in the direction of either the north or the south). The set of corresponding spin configurations will be denoted by $\Sigma_N = \left\{-1, 1\right\}^{\Lambda_N}$. In the standard Ising model the particles are interacting with their 4 immediate neighbours, while in the Ising-Kac model the particles can influence the behaviour of the other particles in a small radius of $\gamma \gg N^{-1}$. In order to describe the interaction, we choose an arbitrary kernel $\mathfrak{K}: \RR^2 \to [0, 1]$ satisfying $\mathfrak{K}(0) = 0$, $\mathfrak{K} \in \mathcal{C}^2$, $\Support{\mathfrak{K}} \subset B^2(0, 3) \DefiningEquality \left\{x \in \RR^2 \colon \abs{x} < 3\right\}$, invariant under rotations and having furthermore $$\int_{\RR^2} \mathfrak{K}(x) dx = 1\,,\quad \int_{\RR^2} \mathfrak{K}(x) \abs{x}^2 dx = 4\,.$$
+The Ising model is a stochastic model of ferromagnetism. On the microscopic level we consider a discrete system of interacting particles on the $\Lambda_N = \ZZ^2 / (2N+1)\ZZ^2$ grid for some $N \in \NN$, where in every grid point sits a spin with exactly two possible state: $\pm1$ (intuitively: the spin pointing in the direction of either the north or the south). The set of corresponding spin configurations will be denoted by $\Sigma_N = \left\{-1, 1\right\}^{\Lambda_N}$. In the standard Ising model the particles are interacting only with their immediate neighbours, while in the Ising-Kac model the particles can influence the behaviour of the other particles in a small radius proportional to a scaling factor $\gamma > 0$. To build intuition about the behaviour of the system, we can imagine to have a probability distribution on $\Sigma_N$ depending on the inverse temperature $\beta > 0$, under which configurations with closeby spins aligned in the same direction have in general higher probability, than configurations where the spins are completely disorganised. The system is more likely to go from a less probable configuration to a more probable one, but the reverse transition is also not excluded, especially at low inverse temperatures. The locally averaged field describes the strength of the field at each gridpoint, and we will be interested in the fluctuations of this field after suitable renormalization and continuous extension to $\TT^2$. In particular one can show that this random process describing the fluctuations of the field converges in law to the solution of the $\Phi^4_2$ equation for the same initial configuration, as we take $N$ to infinity.
+
+\section{The Ising-Kac model}
+In order to precisely describe the interaction, we choose an arbitrary kernel $\mathfrak{K}: \RR^2 \to [0, 1]$ satisfying $\mathfrak{K} \in \mathcal{C}^2$, $\Support{\mathfrak{K}} \subset B^2(0, 3) \DefiningEquality \left\{x \in \RR^2 \colon \abs{x} < 3\right\}$, invariant under rotations and having furthermore $$\int_{\RR^2} \mathfrak{K}(x) dx = 1\,,\quad \int_{\RR^2} \mathfrak{K}(x) \abs{x}^2 dx = 4\,.$$
 
 
-For a scaling factor $0 < \gamma < \frac{1}{3}$ (on which $N$ depends, as we will later see), we define a discretized version  of the kernel as 
-$$\kappa_\gamma: \Lambda_N \to [0, 1]\,,\quad\kappa_\gamma(k) = \frac{\mathfrak{K}(\gamma k)}{\sum_{l \in \Lambda_N} \mathfrak{K}(\gamma l)}~(k \in \Lambda_N)\,,$$
-which acts as a mollifier on the grid to define the locally averaged field for any $\sigma \in \Sigma_N$ configuration through discrete convolution as \begin{align}
-  h_\gamma(\sigma, k) \DefiningEquality (\Convolve{\kappa_\gamma}{\sigma})(k) \DefiningEquality  \sum_{l\in \Lambda_N} \kappa_\gamma(k-l) \sigma(l)\,.
+For a scaling factor $0 < \gamma < \frac{1}{3}$ (on which $N = N(\gamma)$ will depend, as we see later), we discretizes the kernel as 
+$$\kappa_\gamma: \Lambda_N \to [0, 1]\,,\quad\kappa_\gamma(k) = \begin{cases}
+  \frac{\mathfrak{K}(\gamma k)}{\sum_{l \in \Lambda_N} \mathfrak{K}(\gamma l)}&k \neq 0\\
+  0 & k = 0
+\end{cases}\,,$$
+which acts as a mollifier on the grid to define the locally averaged field for any $\sigma \in \Sigma_N$ configuration through a discrete convolution as \begin{align}
+  h_\gamma(\sigma, k) \DefiningEquality (\Convolve{\kappa_\gamma}{\sigma})(k) \DefiningEquality  \sum_{l\in \Lambda_N} \kappa_\gamma(k-l) \sigma(l)\,,
+\end{align}
+where addition is always to be understood modulo $2N + 1$ on the grid: $k + l \DefiningEquality k + l + n(2N + 1) \in \left\{-N, \ldots, N\right\}$ for appropriate $n \in \ZZ$. \footnote{\textcolor{red}{$\gamma \gg N^{-1}$ to avoid self interactions}}
+
+The locally averaged field $h_\gamma$ describes the strength of the magnetic field for a spin at position $k$, and the total energy of the system is defined through the Hamiltonian \begin{align}
+  \mathcal{H}_\gamma(\sigma) \DefiningEquality -\frac{1}{2}\sum_{k\in \Lambda_N} \sigma(k) h_\gamma(k)\,.
+\end{align} With the help of the Hamiltonian we can define the Gibbs measure on $\Sigma_N$ for any $\beta > 0$ inverse temperature as \begin{align}
+  \lambda_\gamma(\sigma) = \frac{1}{\mathcal{Z}_\gamma}\exp{\left(-\beta \mathcal{H}_\gamma(\sigma)\right)}\,,\quad \mathcal{Z}_\gamma = \sum_{\sigma \in \Sigma_N} \exp{\left(-\beta \mathcal{H}_\gamma(\sigma)\right)}\,.
 \end{align}
 
-
+To describe the evolution of the process we define a Markov process on $\Sigma_N$ with the defined by the generator \begin{align}
+  \mathcal{L}_\gamma(f)(k) = \sum_{l \in \Lambda_N} c_\gamma(\sigma, l)(f(\sigma^j) - f(\sigma))
+\end{align}
+for functions $f: \Lambda_N \to \RR$, where we let $\sigma^j \in \Sigma_N$ denote the configuration identical to $\sigma$, except for the spin at position $j$, which we flipped. For the jump rates $c_\gamma(\sigma, l)$, we choose the those of the Glauber dynamics, which can be simplified as
+\begin{align}
+  \label{eq:trig_jump_rates}
+  c_\gamma(\sigma, l) = \frac{\lambda(\sigma^l)}{\lambda(\sigma) + \lambda(\sigma^l)} = \frac{e^{-\sigma(j)\beta h_\gamma(\sigma, j)}}{e^{\beta h_\gamma(\sigma, j)} + e^{-\beta h_\gamma(\sigma, j)}} = \frac{1}{2}\left(1 - \sigma(j) \tanh\left(\beta h_\gamma(\sigma, j)\right)\right)\,,
+\end{align}
+where the second equality follows from \begin{align}
+  \TODO{explain}\,,
+\end{align}
+and the second equality follows from
+\begin{align}
+  \TODO{trig identity}\,.
+\end{align}
+For the Markov process generated by the semigroup we write $(\sigma(t))_{t \ge 0}$, and for the corresponding process generated by the observable $h_\gamma(\cdot, \cdot)$ we write $(h_\gamma(t, k))_{t \ge 0} \DefiningEquality h_\gamma(\sigma(t), k)$ for each $k \in \Lambda_N$, for which we can write the evolution equation
+\begin{align}
+  \label{eq:microscopic_evolution_equation}
+  h_\gamma(t, k) = h_\gamma(0, k) + \int_{0}^{t} \mathcal{L}_\gamma h(s, k) \,ds + m_\gamma(t, k)\,
+\end{align}
+where $(m(t, k))_{t\ge 0}$ is a martingale for each $k\in \Lambda_N$\cite[Appendix B]{mourrat2015convergencetwodimensionaldynamicisingkac}, since the $\sigma(\cdot, k)$ process is a Feller process \cite[Section 6.5.1]{gall2016brownian}. Using the trigonometric representation of the jump rates \eqref{eq:microscopic_evolution_equation}, the Taylor expansion $\tanh(h) = h - \frac{h^3}{3} + \smallO{h^6}$ and the fact, that $h_\gamma(\sigma^j, k) - h_\gamma(\sigma, k) = -2 \kappa_\gamma(k-j) \sigma(j)$ we obtain 
+\begin{align}
+  \mathcal{L}_\gamma h_\gamma(\sigma, k) &= \left(\Convolve{\kappa_\gamma}{h_\gamma(\sigma, k)} - h_\gamma(\sigma, k)\right) + (\beta - 1) \Convolve{\kappa_\gamma}{h_\gamma(\sigma, k)} - \frac{\beta^3}{3}\left(\Convolve{\kappa_\gamma}{h_\gamma^3(\sigma, k)}\right) + \operatorname{err}\\
+  &\DefiningEqualityRev \bar{\Delta}_\gamma h_\gamma(\sigma, k) + (\beta - 1) \Convolve{\kappa_\gamma}{h_\gamma(\sigma, k)} - \frac{\beta^3}{3}\left(\Convolve{\kappa_\gamma}{h_\gamma^3(\sigma, k)}\right) + \operatorname{err}\,.
+\end{align}
+We use the evolution equation \eqref{eq:microscopic_evolution_equation} to derive an SPDE after suitable rescaling on $\TT^2$, identified with $[0, 1]^2$. For this purpose we choose $\gamma \in (0, 1)$, $N = N(\gamma)$ to be defined later, $\epsilon = \frac{2}{2N + 1}$ and $\alpha, \delta > 0$ scaling factors, and we assign to every $k \in \Lambda_N$ the macroscopic coordinates by scaling $$k = (k_1, k_2) \mapsto \epsilon k =(\epsilon k_1, \epsilon k_2) \in \TT^2\,.$$ Let us in particular denote $\Lambda_\epsilon = \epsilon \Lambda_N$, and for these points we consider the rescaled field
+\begin{align}
+  X_\gamma(t, x) = \frac{1}{\delta}h_\gamma\left(\frac{t}{\alpha}, \frac{x}{\epsilon}\right)~(x\in \Lambda_\epsilon, t \ge 0)\,.
+\end{align}
+From the evolution equation \eqref{eq:microscopic_evolution_equation} after rescaling we get
+\begin{align}
+  \begin{split}
+      X_\gamma(t, x) =& X_\gamma(0, x) + \int_{0}^{t} \biggl(\frac{\epsilon^2}{\gamma^2 \alpha}\tilde{\Delta}_\gamma X_\gamma(s, x) + \frac{\beta - 1}{\alpha} \Convolve[\epsilon]{K_\gamma}{X_\gamma(s, x)}\\
+    &-\frac{\beta^3}{3} \frac{\delta^2}{\alpha} \Convolve[\epsilon]{K_\gamma}{X_\gamma^3(s, x)} + \Convolve[\epsilon]{K_\gamma}{E_\gamma(s, x)}\biggr)\,ds + M_\gamma(t, x)\,,
+  \end{split}
+\end{align}
+where 
+\section{Solution theory of $\Phi^4_2$}
 
 \begin{itemize}
   \item variant of the ferromagnetic Ising model
@@ -226,14 +297,14 @@ which acts as a mollifier on the grid to define the locally averaged field for a
       \end{itemize}
     \end{itemize}
     \item locally averaged field $\to$ Hamiltonian $\to$ Gibbs measure $\to$ Glauber dynamics $\to$ $(\sigma_t)_{t\ge 0}$ pure jump Markov process on $\Sigma_N$ describing the evolution of the spin configurations, and the corresponding $h_\gamma(\sigma)$ local mean field
-    \item (Le Gall): $h_\gamma(t, k) = h_\gamma(0, k) + \int_0^t \mathcal{L} h_\gamma(s, k)\,ds + m_\gamma(t, k)$, where $(m_\gamma(t, k))_{t \ge 0}$ is a martingale for all $k \in \Lambda_N$. The [[predictable quadratic covariation]] of the martingale are given in $(2.10)$.
-    \begin{itemize}
-      \item note: if we discretized the time and we interpreted $\mathcal{L}$ as $P-I$ operator, then it's clear why $m$ is a martingale.
-    \end{itemize}
+    % \item (Le Gall): $h_\gamma(t, k) = h_\gamma(0, k) + \int_0^t \mathcal{L} h_\gamma(s, k)\,ds + m_\gamma(t, k)$, where $(m_\gamma(t, k))_{t \ge 0}$ is a martingale for all $k \in \Lambda_N$. The [[predictable quadratic covariation]] of the martingale are given in $(2.10)$.
+    % \begin{itemize}
+    %   \item note: if we discretized the time and we interpreted $\mathcal{L}$ as $P-I$ operator, then it's clear why $m$ is a martingale.
+    % \end{itemize}
   \end{itemize}
   \item macroscopic coordinates:
   \begin{itemize}
-    \item we rescale time, space and amplitude by factors $\alpha$, $\epsilon$ and $\delta$, respectively, and by considering the evolution equation after the coordinate change we obtain the right factors so that the leading terms have coefficient 1 in the rescaled equation.
+    % \item we rescale time, space and amplitude by factors $\alpha$, $\epsilon$ and $\delta$, respectively, and by considering the evolution equation after the coordinate change we obtain the right factors so that the leading terms have coefficient 1 in the rescaled equation.
     \item this gives a guess for the inverse temperature, but the trivial guess (O(1)) is incorrect as already observed in [10]
     \begin{itemize}
       \item in the same paper they say \say{The origin of the Wick regularization in the limit theory is then explained in terms of the critical temperature shift found in Theorem 1.1, which is in fact recognized as the microscopic origin of the Wick regularization.}
@@ -257,6 +328,7 @@ which acts as a mollifier on the grid to define the locally averaged field for a
 \end{itemize}
 \chapter{Solution theory of $\Phi^4_2$}
 \begin{itemize}
+  \item hontestly, I should maybe just handwave it, and state proposition 3.2, saying that a continuous solution operator exists.
   \item linearized solution $\tilde{X}$ lies in $\mathcal{C}^-$, so no way to interpret $\tilde{X}^3$ consistently, and no hope that the solution of the non-linear equation is any more regular
   \begin{itemize}
     \item Perkowski had a slightly different argument, claiming that the solution is not better than the stochastic convolution, but I think it's pretty much the same
