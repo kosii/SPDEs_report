@@ -101,6 +101,7 @@
 \DeclareMathOperator{\Intersection}{\cap}
 \DeclareMathOperator{\Range}{ran}
 \DeclareMathOperator{\Support}{supp}
+\DeclareMathOperator{\Ext}{Ext}
 
 
 
@@ -206,7 +207,20 @@
 \tableofcontents
 
 \chapter{Introducion}
-The Ising model is a stochastic model of ferromagnetism. On the microscopic level we consider a discrete system of interacting particles on the $\Lambda_N = \ZZ^2 / (2N+1)\ZZ^2$ grid for some $N \in \NN$, where in every grid point sits a spin with exactly two possible state: $\pm1$ (intuitively: the spin pointing in the direction of either the north or the south). The set of corresponding spin configurations will be denoted by $\Sigma_N = \left\{-1, 1\right\}^{\Lambda_N}$. In the standard Ising model the particles are interacting only with their immediate neighbours, while in the Ising-Kac model the particles can influence the behaviour of the other particles in a small radius proportional to a scaling factor $\gamma > 0$. To build intuition about the behaviour of the system, we can imagine to have a probability distribution on $\Sigma_N$ depending on the inverse temperature $\beta > 0$, under which configurations with closeby spins aligned in the same direction have in general higher probability, than configurations where the spins are completely disorganised. The system is more likely to go from a less probable configuration to a more probable one, but the reverse transition is also not excluded, especially at low inverse temperatures. The locally averaged field describes the strength of the field at each gridpoint, and we will be interested in the fluctuations of this field after suitable renormalization and continuous extension to $\TT^2$. In particular one can show that this random process describing the fluctuations of the field converges in law to the solution of the $\Phi^4_2$ equation for the same initial configuration, as we take $N$ to infinity.
+The Ising model is a stochastic model of ferromagnetism. On the microscopic level we consider a discrete system of interacting particles on the $\Lambda_N = \ZZ^2 / (2N+1)\ZZ^2$ grid for some $N \in \NN$, where in every grid point sits a spin with exactly two possible state: $\pm1$ (intuitively: the spin pointing in the direction of either the north or the south). The set of corresponding spin configurations will be denoted by $\Sigma_N = \left\{-1, 1\right\}^{\Lambda_N}$. In the standard Ising model the particles are interacting only with their immediate neighbours, while in the Ising-Kac model the particles can influence the behaviour of the other particles in a small radius proportional to a scaling factor $\gamma > 0$. To build intuition about the behaviour of the system, we can imagine to have a probability distribution on $\Sigma_N$ depending on the inverse temperature $\beta > 0$, under which configurations with close-by spins aligned in the same direction have in general higher probability, than configurations where the spins are completely disorganised. The system is more likely to go from a less probable configuration to a more probable one, but the reverse transition is also not excluded, especially at low inverse temperatures. The locally averaged field describes the strength of the field at each gridpoint, and we will be interested in the fluctuations of this field after suitable renormalization and continuous extension to $\TT^2$. In particular one can show that this random process describing the fluctuations of the field converges in law to the solution of the $\Phi^4_2$ equation 
+\begin{align}
+  \begin{split}
+  \partial_t X(t, x) &= \Delta X(t, x) - \frac{1}{3}X^3(t, x) + A X(t, x) + \sqrt{2}\xi(t, x)\\
+  X(0, \cdot) &= X_0\,    
+  \end{split}
+\end{align}
+as long as the initial configurations of the discrete systems converge to $X_0$ in distribution, as we take $N$ to infinity.
+
+We know, that the solution of this equation is distribution valued, and form the mild formulation of the equation it follows that $X_t \in \mathcal{C}^- \DefiningEquality \Union_{\nu > 0} \mathcal{C}^{-\nu}$, which makes the $X_t^3$ term in the equation ill-defined. In the solution theory of the $\Phi^4_2$ equation this is corrected by renormalizing the equation with a diverging linear term, formally written as 
+\begin{align}
+  \partial_t X(t, x) = \Delta X(t, x) - \frac{1}{3}\left(X^3(t, x) - 3 \infty \times X(t, x)\right) + A X(t, x) + \sqrt{2}\xi(t, x)\,.
+\end{align}
+We will see in the following, that the need for renormalization is not simply a mathematical artifact of the solution theory, but consistent with the physical interpretation, in the sense that the renormalization represents \say{a shift of the critical temperature away from its mean field value} \cite{mourrat2015convergencetwodimensionaldynamicisingkac}.
 
 \section{The Ising-Kac model}
 In order to precisely describe the interaction, we choose an arbitrary kernel $\mathfrak{K}: \RR^2 \to [0, 1]$ satisfying $\mathfrak{K} \in \mathcal{C}^2$, $\Support{\mathfrak{K}} \subset B^2(0, 3) \DefiningEquality \left\{x \in \RR^2 \colon \abs{x} < 3\right\}$, invariant under rotations and having furthermore $$\int_{\RR^2} \mathfrak{K}(x) dx = 1\,,\quad \int_{\RR^2} \mathfrak{K}(x) \abs{x}^2 dx = 4\,.$$
@@ -259,66 +273,98 @@ We use the evolution equation \eqref{eq:microscopic_evolution_equation} to deriv
 \end{align}
 From the evolution equation \eqref{eq:microscopic_evolution_equation} after rescaling we get
 \begin{align}
+  \label{eq:evolution_in_macroscopic_coordintes}
   \begin{split}
       X_\gamma(t, x) =& X_\gamma(0, x) + \int_{0}^{t} \biggl(\frac{\epsilon^2}{\gamma^2 \alpha}\tilde{\Delta}_\gamma X_\gamma(s, x) + \frac{\beta - 1}{\alpha} \Convolve[\epsilon]{K_\gamma}{X_\gamma(s, x)}\\
     &-\frac{\beta^3}{3} \frac{\delta^2}{\alpha} \Convolve[\epsilon]{K_\gamma}{X_\gamma^3(s, x)} + \Convolve[\epsilon]{K_\gamma}{E_\gamma(s, x)}\biggr)\,ds + M_\gamma(t, x)\,,
   \end{split}
 \end{align}
-where 
-\section{Solution theory of $\Phi^4_2$}
+where $K_\gamma(x) = \epsilon^{-2} \kappa_\gamma(\epsilon^{-1}x) = c_\gamma \frac{\gamma^2}{\epsilon^2}\mathfrak{K}\left(\frac{\gamma}{\epsilon}x\right)$ is our rescaled kernel, $M_\gamma(t, x) \DefiningEquality \frac{1}{\delta}m_\gamma\left(\frac{t}{\alpha},\frac{x}{\epsilon}\right)$ is the rescaled martingale, $\tilde{\Delta}_\gamma = \frac{\gamma^2}{\epsilon^2} \bar{\Delta}_\gamma$ is the rescaled discrete Laplacian and $\Convolve[\epsilon]{}{}$ is the discrete convolution on $\Lambda_\epsilon$. The error term $E_\gamma(s, x)$ is furthermore given explicitely as 
+\begin{align}
+  \label{eq:error_term}
+  E_\gamma(t, \cdot) = \frac{1}{\delta \alpha}\left(\tanh\left(\beta \delta X_\gamma(t, \cdot)\right) - \beta \delta X_\gamma(t, \cdot) + \frac{(\beta \delta)^3}{3} X_\gamma(t, \cdot)^3\right)\,.
+\end{align}
+To fix the above appearing scaling factors as a function of the Kac scaling parameter $\gamma$, we have to observe the following constraints 
+\begin{itemize}
+  \item $N = \floor{\lambda^{-2}}$,
+  \item  $\epsilon = \frac{2}{2N + 1}$ is by definition the distance between adjacent particles in macroscopic coordinates,
+  \item the coefficients $\frac{\epsilon^2}{\gamma^2 \alpha}$ and $\frac{\delta^2}{\alpha}$ should converge to $1$ as $\gamma \to 0^+$, for the convergence of the corresponding terms in \eqref{eq:evolution_in_macroscopic_coordintes} to something non-trivial,
+\end{itemize}
+which results in $\alpha = \gamma^2, \delta=\gamma$. In partcular, the leading order term in the expansion of the error \eqref{eq:error_term} scales as $\frac{(\beta \delta)^5}{\delta\alpha} = \beta^5 \gamma^2$, which we would expect to converge to $0$ for an appropriate choice of $\beta$, whose value was not yet set. Based on \eqref{eq:evolution_in_macroscopic_coordintes} a reasonable choice could be $\frac{\beta - 1}{\alpha} \approx 1$, which turns out to be not the right one. The authors refer to \cite{cassandro1997upper}, in which it was already observed that at least in the stationary case a shift from the 
+
+
+\TODO{finish this phrase, conclude from (2.18) that it's a logarithmically divergent term}.
+
+\TODO{state the evolution equation with all the terms replaced, also redefined the $\Delta$ operator}
 
 \begin{itemize}
-  \item variant of the ferromagnetic Ising model
+  % \item we rescale time, space and amplitude by factors $\alpha$, $\epsilon$ and $\delta$, respectively, and by considering the evolution equation after the coordinate change we obtain the right factors so that the leading terms have coefficient 1 in the rescaled equation.
+  \item this gives a guess for the inverse temperature, but the trivial guess (O(1)) is incorrect as already observed in [10]
   \begin{itemize}
-    \item Ising-Kac: not only closest neighborhood interactions, but in a small radius of $\gamma^{-1}$
-    \item using Glauber dynamics for the jump probabilities
-    \item "random fluctuations of a \[...\] magnetisation field $X_\gamma$ in the limit $\gamma \to 0$, for inverse temperature close to the critical temperature of the mean field model" 
-    \item ~"under suitable assumptions [...] these fields converge in law to the solution of the $\Phi^4_2$ equation"
+    \item in the same paper they say \say{The origin of the Wick regularization in the limit theory is then explained in terms of the critical temperature shift found in Theorem 1.1, which is in fact recognized as the microscopic origin of the Wick regularization.}
+    \item instead we choose something that such that the term $\frac{\beta -1}{\alpha} = \mathfrak{c}_\gamma +A$ where $A$ is fixed and $\mathfrak{c}_\gamma = \Theta(\log{\gamma^{-1}})$. "The extra term $\mathfrak{c}_\gamma$ reflects the fact that the limiting equation has to be renormalized" (p7)
   \end{itemize}
-  \item $\Phi^4_2$ is ill defined, solution theory is more "intricate" (p1) (than that of $\Phi^4_1$)
-  \begin{itemize}
-    \item solution is at best as good as the stochastic convolution term, no "consistent" definition of the term $X^3$,
-    \item renormalization needed, so instead of $$\partial_t X(t, x) = \Delta X(t, x) - \frac{1}{3} X^3(t, x) + A X(t, x) + \sqrt{2}\xi(t, x)$$we formally solve $$\partial_t X(t, x) = \Delta X(t, x) - \frac{1}{3} (X^3(t, x) - 3 \infty \times X(t, x))+ A X(t, x) + \sqrt{2}\xi(t, x)$$(for the solution theory see Perkowski, or directly da Prato-Debussche)
-    \item other solution theory, which allows to solve much more singular SPDEs, motivation: "to show that fluctuations of non-linear particle systems are governed by such an equation". 
-  \end{itemize}
-  \item interesting feature of the result: "it gives a natural interpretation for the infinite renormalisation constant as a shift of critical temperature away from its mean field value"
-  \item use of the Kac-type interactions prevents the model from converging to the continuous Ising model
 \end{itemize}
+
+
+$X_\gamma(t, \cdot)$ was so far defined only for the points $x \in \Lambda_\epsilon$, thus if we wanted to talk about it's convergence to $X$, we have to first extend it to the whole $\TT^2$. For the sake of convenience we do it with the help of trigonometric polynomials, since they play well with the tools of Fourier analysis, but the choice is essentially irrelevant \cite{mourrat2015convergencetwodimensionaldynamicisingkac}. Thus for any $Y: \Lambda_\epsilon \to \RR$ we define the discrete Fourier transform $\hat{Y}$ as \begin{align}
+  \hat{Y}(k) = \begin{cases}
+      \sum_{x \in \Lambda_\epsilon} \epsilon^2 e^{- i \pi k \cdot x} Y(x)&k \in \left\{-N, \ldots, N\right\}^2\\
+      0&\text{otherwise}
+  \end{cases}\,,
+\end{align}
+form which we get by inverse Fourier transformation $$\Ext Y(x) \DefiningEquality \frac{1}{4} \sum_{k \in \ZZ^2} \hat{Y}(k) e^{i \pi k \cdot x} = \frac{1}{4} \sum_{k \in \left\{-N, \dots, N\right\}^2} \sum_{y \in \Lambda_\epsilon}\epsilon^2 e^{i \pi k \cdot (x -y)} Y(y)\,.$$
+The extension $\Ext Y$ is smooth, real valued, it's the unique trigonometric polynomial of degree $N$ coinciding with $Y$ on $\Lambda_\epsilon$.
+
+\section{Solution theory of $\Phi^4_2$}
+
+\section{Main result}
+
+% \begin{itemize}
+  % \item variant of the ferromagnetic Ising model
+  % \begin{itemize}
+  %   \item Ising-Kac: not only closest neighborhood interactions, but in a small radius of $\gamma^{-1}$
+  %   \item using Glauber dynamics for the jump probabilities
+  %   \item "random fluctuations of a \[...\] magnetisation field $X_\gamma$ in the limit $\gamma \to 0$, for inverse temperature close to the critical temperature of the mean field model" 
+  %   \item ~"under suitable assumptions [...] these fields converge in law to the solution of the $\Phi^4_2$ equation"
+  % \end{itemize}
+  % \item $\Phi^4_2$ is ill defined, solution theory is more "intricate" (p1) (than that of $\Phi^4_1$)
+  % \begin{itemize}
+  %   \item solution is at best as good as the stochastic convolution term, no "consistent" definition of the term $X^3$,
+  %   \item renormalization needed, so instead of $$\partial_t X(t, x) = \Delta X(t, x) - \frac{1}{3} X^3(t, x) + A X(t, x) + \sqrt{2}\xi(t, x)$$we formally solve $$\partial_t X(t, x) = \Delta X(t, x) - \frac{1}{3} (X^3(t, x) - 3 \infty \times X(t, x))+ A X(t, x) + \sqrt{2}\xi(t, x)$$(for the solution theory see Perkowski, or directly da Prato-Debussche)
+  %   \item other solution theory, which allows to solve much more singular SPDEs, motivation: "to show that fluctuations of non-linear particle systems are governed by such an equation". 
+  % \end{itemize}
+  % \item interesting feature of the result: "it gives a natural interpretation for the infinite renormalisation constant as a shift of critical temperature away from its mean field value"
+  % \item use of the Kac-type interactions prevents the model from converging to the continuous Ising model
+% \end{itemize}
 \chapter{Setting and main result}
 \begin{itemize}
-  \item microscopic system
-  \begin{itemize}
-    \item the setting on $\Lambda_N = \mathbb{Z}^2 / (2N + 1)\mathbb{Z}^2$ is quite clear
-    \begin{itemize}
-      \item except some constraints on the kernel:
-      \begin{itemize}
-        \item supported on a ball of radius 3 (I guess to make it interesting enough?)
-        \item why do we have $\mathfrak{K}(0) = 0$  (to avoid self interactions? if we didn't have this, then the mean field would be a constant higher or lower, no?)
-      \end{itemize}
-    \end{itemize}
-    \item locally averaged field $\to$ Hamiltonian $\to$ Gibbs measure $\to$ Glauber dynamics $\to$ $(\sigma_t)_{t\ge 0}$ pure jump Markov process on $\Sigma_N$ describing the evolution of the spin configurations, and the corresponding $h_\gamma(\sigma)$ local mean field
-    % \item (Le Gall): $h_\gamma(t, k) = h_\gamma(0, k) + \int_0^t \mathcal{L} h_\gamma(s, k)\,ds + m_\gamma(t, k)$, where $(m_\gamma(t, k))_{t \ge 0}$ is a martingale for all $k \in \Lambda_N$. The [[predictable quadratic covariation]] of the martingale are given in $(2.10)$.
-    % \begin{itemize}
-    %   \item note: if we discretized the time and we interpreted $\mathcal{L}$ as $P-I$ operator, then it's clear why $m$ is a martingale.
-    % \end{itemize}
-  \end{itemize}
-  \item macroscopic coordinates:
-  \begin{itemize}
-    % \item we rescale time, space and amplitude by factors $\alpha$, $\epsilon$ and $\delta$, respectively, and by considering the evolution equation after the coordinate change we obtain the right factors so that the leading terms have coefficient 1 in the rescaled equation.
-    \item this gives a guess for the inverse temperature, but the trivial guess (O(1)) is incorrect as already observed in [10]
-    \begin{itemize}
-      \item in the same paper they say \say{The origin of the Wick regularization in the limit theory is then explained in terms of the critical temperature shift found in Theorem 1.1, which is in fact recognized as the microscopic origin of the Wick regularization.}
-      \item instead we choose something that such that the term $\frac{\beta -1}{\alpha} = \mathfrak{c}_\gamma +A$ where $A$ is fixed and $\mathfrak{c}_\gamma = \Theta(\log{\gamma^{-1}})$. "The extra term $\mathfrak{c}_\gamma$ reflects the fact that the limiting equation has to be renormalized" (p7)
-    \end{itemize}
-  \end{itemize}
-  \item extension of functions given on the macroscopic coordinates to the whole $\mathbb{T}^2$:
-  \begin{itemize}
-    \item discrete Fourier transform on discrete coordinates, then inverse Fourier transform on the whole $\mathbb{T}^2$ $\textcolor{red}{\text{Q: why do we get something real valued here}}$   
-    \begin{itemize}
-      \item the extension will coincide with the original function on the discrete points
-      \item extension is compatible with known results: well behavedness with respect to convolution and Parseval.
-    \end{itemize}
-  \end{itemize}
+  % \item microscopic system
+  % \begin{itemize}
+  %   \item the setting on $\Lambda_N = \mathbb{Z}^2 / (2N + 1)\mathbb{Z}^2$ is quite clear
+  %   % \begin{itemize}
+  %   %   \item except some constraints on the kernel:
+  %   %   \begin{itemize}
+  %   %     \item supported on a ball of radius 3 (I guess to make it interesting enough?)
+  %   %     \item why do we have $\mathfrak{K}(0) = 0$  (to avoid self interactions? if we didn't have this, then the mean field would be a constant higher or lower, no?)
+  %   %   \end{itemize}
+  %   % \end{itemize}
+  %   \item locally averaged field $\to$ Hamiltonian $\to$ Gibbs measure $\to$ Glauber dynamics $\to$ $(\sigma_t)_{t\ge 0}$ pure jump Markov process on $\Sigma_N$ describing the evolution of the spin configurations, and the corresponding $h_\gamma(\sigma)$ local mean field
+  %   % \item (Le Gall): $h_\gamma(t, k) = h_\gamma(0, k) + \int_0^t \mathcal{L} h_\gamma(s, k)\,ds + m_\gamma(t, k)$, where $(m_\gamma(t, k))_{t \ge 0}$ is a martingale for all $k \in \Lambda_N$. The [[predictable quadratic covariation]] of the martingale are given in $(2.10)$.
+  %   % \begin{itemize}
+  %   %   \item note: if we discretized the time and we interpreted $\mathcal{L}$ as $P-I$ operator, then it's clear why $m$ is a martingale.
+  %   % \end{itemize}
+  % \end{itemize}
+  % \item macroscopic coordinates:
+  % \end{itemize}
+  % \item extension of functions given on the macroscopic coordinates to the whole $\mathbb{T}^2$:
+  % \begin{itemize}
+  %   % \item discrete Fourier transform on discrete coordinates, then inverse Fourier transform on the whole $\mathbb{T}^2$ $\textcolor{red}{\text{Q: why do we get something real valued here}}$   
+  %   % \begin{itemize}
+  %   %   \item the extension will coincide with the original function on the discrete points
+  %   %   \item extension is compatible with known results: well behavedness with respect to convolution and Parseval.
+  %   % \end{itemize}
+  % \end{itemize}
   \item main result:
   \begin{itemize}
     \item $\mathcal{D}(\mathbb{R}_+, \mathcal{S})$: $\mathcal{S}$ metric space-valued càdlàg functions on $\mathbb{R}_+$ endowed with the Skorokhod topology
