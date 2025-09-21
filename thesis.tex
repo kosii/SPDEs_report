@@ -316,9 +316,15 @@ $X_\gamma(t, \cdot)$ was so far defined only for the points $x \in \Lambda_\epsi
 \end{align}
 form which we get by inverse Fourier transformation $$\Ext Y(x) \DefiningEquality \frac{1}{4} \sum_{k \in \ZZ^2} \hat{Y}(k) e^{i \pi k \cdot x} = \frac{1}{4} \sum_{k \in \left\{-N, \dots, N\right\}^2} \sum_{y \in \Lambda_\epsilon}\epsilon^2 e^{i \pi k \cdot (x -y)} Y(y)\,.$$
 The extension $\Ext Y$ is smooth, real valued, it's the unique trigonometric polynomial of degree $N$ coinciding with $Y$ on $\Lambda_\epsilon$.
+\TODO{mention lemma a.something about the extension estimate}
+\TODO{mention that unless otherwise stated, we mean extension by $\Ext$}
 
 
 \section{Main result}
+  \begin{itemize}
+    \item $\mathcal{D}(\mathbb{R}_+, \mathcal{S})$: $\mathcal{S}$ metric space-valued càdlàg functions on $\mathbb{R}_+$ endowed with the Skorokhod topology
+    \item $\mathcal{C}^{-\nu}~(\nu > 0)$ Besov space, with the def Perkowski used!
+  \end{itemize}
 
 \begin{theorem}
   Assume that the scaling assumptions hold \TODO{which scaling assumptions?}, where the precise value of $\mathfrak{c}_\gamma$ is given by\begin{align}
@@ -411,65 +417,78 @@ has a unique solution up until some random time $T^\star$, and the solution is \
   % \item interesting feature of the result: "it gives a natural interpretation for the infinite renormalisation constant as a shift of critical temperature away from its mean field value"
   % \item use of the Kac-type interactions prevents the model from converging to the continuous Ising model
 % \end{itemize}
-\chapter{Setting and main result}
-\begin{itemize}
-  % \item microscopic system
-  % \begin{itemize}
-  %   \item the setting on $\Lambda_N = \mathbb{Z}^2 / (2N + 1)\mathbb{Z}^2$ is quite clear
-  %   % \begin{itemize}
-  %   %   \item except some constraints on the kernel:
-  %   %   \begin{itemize}
-  %   %     \item supported on a ball of radius 3 (I guess to make it interesting enough?)
-  %   %     \item why do we have $\mathfrak{K}(0) = 0$  (to avoid self interactions? if we didn't have this, then the mean field would be a constant higher or lower, no?)
-  %   %   \end{itemize}
-  %   % \end{itemize}
-  %   \item locally averaged field $\to$ Hamiltonian $\to$ Gibbs measure $\to$ Glauber dynamics $\to$ $(\sigma_t)_{t\ge 0}$ pure jump Markov process on $\Sigma_N$ describing the evolution of the spin configurations, and the corresponding $h_\gamma(\sigma)$ local mean field
-  %   % \item (Le Gall): $h_\gamma(t, k) = h_\gamma(0, k) + \int_0^t \mathcal{L} h_\gamma(s, k)\,ds + m_\gamma(t, k)$, where $(m_\gamma(t, k))_{t \ge 0}$ is a martingale for all $k \in \Lambda_N$. The [[predictable quadratic covariation]] of the martingale are given in $(2.10)$.
-  %   % \begin{itemize}
-  %   %   \item note: if we discretized the time and we interpreted $\mathcal{L}$ as $P-I$ operator, then it's clear why $m$ is a martingale.
-  %   % \end{itemize}
-  % \end{itemize}
-  % \item macroscopic coordinates:
-  % \end{itemize}
-  % \item extension of functions given on the macroscopic coordinates to the whole $\mathbb{T}^2$:
-  % \begin{itemize}
-  %   % \item discrete Fourier transform on discrete coordinates, then inverse Fourier transform on the whole $\mathbb{T}^2$ $\textcolor{red}{\text{Q: why do we get something real valued here}}$   
-  %   % \begin{itemize}
-  %   %   \item the extension will coincide with the original function on the discrete points
-  %   %   \item extension is compatible with known results: well behavedness with respect to convolution and Parseval.
-  %   % \end{itemize}
-  % \end{itemize}
-  \item main result:
-  \begin{itemize}
-    \item $\mathcal{D}(\mathbb{R}_+, \mathcal{S})$: $\mathcal{S}$ metric space-valued càdlàg functions on $\mathbb{R}_+$ endowed with the Skorokhod topology
-    \item $\mathcal{C}^{-\nu}~(\nu > 0)$ Besov space, with the def Perkowski used!
-    \item just state Theorem 2.1
-  \end{itemize}
-\end{itemize}
+% \chapter{Setting and main result}
+% \begin{itemize}
+%   % \item microscopic system
+%   % \begin{itemize}
+%   %   \item the setting on $\Lambda_N = \mathbb{Z}^2 / (2N + 1)\mathbb{Z}^2$ is quite clear
+%   %   % \begin{itemize}
+%   %   %   \item except some constraints on the kernel:
+%   %   %   \begin{itemize}
+%   %   %     \item supported on a ball of radius 3 (I guess to make it interesting enough?)
+%   %   %     \item why do we have $\mathfrak{K}(0) = 0$  (to avoid self interactions? if we didn't have this, then the mean field would be a constant higher or lower, no?)
+%   %   %   \end{itemize}
+%   %   % \end{itemize}
+%   %   \item locally averaged field $\to$ Hamiltonian $\to$ Gibbs measure $\to$ Glauber dynamics $\to$ $(\sigma_t)_{t\ge 0}$ pure jump Markov process on $\Sigma_N$ describing the evolution of the spin configurations, and the corresponding $h_\gamma(\sigma)$ local mean field
+%   %   % \item (Le Gall): $h_\gamma(t, k) = h_\gamma(0, k) + \int_0^t \mathcal{L} h_\gamma(s, k)\,ds + m_\gamma(t, k)$, where $(m_\gamma(t, k))_{t \ge 0}$ is a martingale for all $k \in \Lambda_N$. The [[predictable quadratic covariation]] of the martingale are given in $(2.10)$.
+%   %   % \begin{itemize}
+%   %   %   \item note: if we discretized the time and we interpreted $\mathcal{L}$ as $P-I$ operator, then it's clear why $m$ is a martingale.
+%   %   % \end{itemize}
+%   % \end{itemize}
+%   % \item macroscopic coordinates:
+%   % \end{itemize}
+%   % \item extension of functions given on the macroscopic coordinates to the whole $\mathbb{T}^2$:
+%   % \begin{itemize}
+%   %   % \item discrete Fourier transform on discrete coordinates, then inverse Fourier transform on the whole $\mathbb{T}^2$ $\textcolor{red}{\text{Q: why do we get something real valued here}}$   
+%   %   % \begin{itemize}
+%   %   %   \item the extension will coincide with the original function on the discrete points
+%   %   %   \item extension is compatible with known results: well behavedness with respect to convolution and Parseval.
+%   %   % \end{itemize}
+%   % \end{itemize}
+%   \item main result:
+% \end{itemize}
 
 \chapter{Bounds for the linearized system}
+For each $x \in \Lambda_\epsilon$, we can consider the evolution equation of the discrete system as a differential equation, whose mild formulation reads as 
+\begin{align*}
+  X_\gamma(t, x) = P^\gamma_t X^0_\gamma &+ \int_{0}^{t}P^\gamma_{t-r} \Convolve[\epsilon]{K_\gamma}{\left(-\frac{\beta^3}{3}X^3_\gamma(r, x) + (\mathfrak{c}_\gamma + A) X_\gamma(r, x) + E_\gamma(r, x)\right)\,dr}\\
+  &+\int_{0=r}^{t}P^\gamma_{t-r}\,dM_\gamma(r, x)\,,
+\end{align*}
+where $\int_0^t \DefiningEquality \int_{(0, t]}$ and $P^\gamma_t \DefiningEquality e^{\Delta_\gamma t}$ is the semigroup generated by $\Delta_\gamma$, which acts on functions $Y: \Lambda_\epsilon \to \RR$ through convolution with a kernel, also denoted by $P^\gamma_t$.
+
+Let us denote $Z_\gamma(t, x) = \int_{r = 0}^t P^\gamma_{t-r} \,dM_\gamma(r, x)$, which is the solution of the linearized evolution equation
+\begin{align*}
+  dZ_\gamma(t, x) &= \Delta_\gamma Z_\gamma(t, x) dt + dM_\gamma(t, x)\\
+  Z_\gamma(0, x) &= 0 \,.
+\end{align*}
+
+Similarly to the case of the $\Phi^4_2$ equation, we define iterated integrals against the noise term $(M(t, x))_{t \ge 0}$: for $x \in \Lambda_\epsilon$ and $t \ge 0$, let 
+\begin{align*}
+  R^{:1:}_{\gamma, t}(s, x) &\DefiningEquality R_{\gamma, t}(s, x) \DefiningEquality \int_{r = 0}^s P^\gamma_{t-r} \,dM_\gamma(r, x)\,\\
+  R^{:n:}_{\gamma, t}(s, x) &\DefiningEquality n \int_{r = 0}^s R^{:n-1:}_{\gamma, t}(r^{-}, x)\,dR_{\gamma, t}(r, x)~(n\ge2)\,,
+\end{align*}
+and moreover $Z^{:n:}_\gamma(t, x) := R^{:n:}_{\gamma, t}(t, x)$\footnote{For $n \ge 2$  we do not use the $\Ext$ operator for the continuous extension of $R^{:n:}_{\gamma, t}(t, \cdot)$ to a $\TT^2 \to \RR$ function, but we take the inverse Fourier transform of $\hat{R}^{:n:}_{\gamma, t}(t, \cdot) \DefiningEquality n \int_{r = 0}^s \hat{R}^{:n-1:}_{\gamma, t}(r^-, x)\,d\hat{R}_{\gamma, t}(r, x)$, since according to the authors, \say{products are not well captured by} extending by $\Ext$.}. In this section the goal is to obtain uniform bounds in Besov norms on the terms $R^{:n:}_{\gamma, t}$ and $Z^{:n:}_\gamma$, which we later use to prove the convergence of $Z^{:n:}_\gamma$ to a Hermite polynomial and the tightness of a family of distributions.
+
+Contrary to the $\Phi^4_2$ case, we are not integrating against a Gaussian noise anymore, and furthermore $R^{:n:}_{\gamma, t}(\cdot, x)$ is discontinuous. Thus, instead of exploiting the Gaussian hypercontractivity, the authors introduce a general bound in \cite[Lemma 4.1.]{mourrat2015convergencetwodimensionaldynamicisingkac} for iterated integrals against the $(M_\gamma(\cdot, x))_{t \ge 0}$ martingales to control the higher moments, which will in particular be used on $R^{:n:}_{\gamma, t}$ and $Z^{:n:}_\gamma$. They use a version of BDG, after controlling the errors caused by the discontinuities in the jump process, which leads to
+\begin{proposition}[{\cite[Proposition 4.2.]{mourrat2015convergencetwodimensionaldynamicisingkac}}]
+  There exists a constant $\gamma_0 > 0$ such that the following holds. For every $n \in \NN$, $p \ge 1$, $\nu > 0$, $T > 0$, $0\le \lambda \le \frac{1}{2}$ and $0 < \kappa \le 1$, there exists a constant $C = C(n, p, \nu, T, \lambda, \kappa)$ such that for every $0 \le s \le t \le T$ and $0 < \gamma < \gamma_0$,
+  \begin{align*}
+    \Exp{\sup_{0\le r \le t} \norm{R^{:n:}_{\gamma, t}(r, \Placeholder)}^p_{\mathcal{C}^{-\nu-2\lambda}}} &\le C t^{\lambda p} + C \gamma^{p(1-\kappa)}\,,\\
+    \Exp{\sup_{0\le r \le t} \norm{R^{:n:}_{\gamma, t}(r, \Placeholder) - R^{:n:}_{\gamma, s}(r \land s, \Placeholder)}^p_{\mathcal{C}^{-\nu-2\lambda}}} &\le C \abs{t -s}^{\lambda p} + C \gamma^{p(1-\kappa)}\,,\\
+    \Exp{\sup_{0\le r \le t} \norm{R^{:n:}_{\gamma, t}(r, \Placeholder) - R^{:n:}_{\gamma, t}(r \land s, \Placeholder)}^p_{\mathcal{C}^{-\nu-2\lambda}}} &\le C \abs{t -s}^{\lambda p} + C \gamma^{p(1-\kappa)}\,,
+  \end{align*}
+\end{proposition}
+As remarked in \cite[Remark 4.3.]{mourrat2015convergencetwodimensionaldynamicisingkac}, the previous proposition implies under the same conditions the weaker
+\begin{align*}
+      \Exp{ \norm{Z^{:n:}_{\gamma}(t, \Placeholder)}^p_{\mathcal{C}^{-\nu-2\lambda}}} &\le C t^{\lambda p} + C \gamma^{p(1-\kappa)}\,,\\
+    \Exp{\norm{Z^{:n:}_{\gamma}(t, \Placeholder) - Z^{:n:}_{\gamma}(s, \Placeholder)}^p_{\mathcal{C}^{-\nu-2\lambda}}} &\le C \abs{t -s}^{\lambda p} + C \gamma^{p(1-\kappa)}\,,\\
+    \Exp{\norm{Z^{:n:}_{\gamma}(r, \Placeholder) - R^{:n:}_{\gamma, t}(s, \Placeholder)}^p_{\mathcal{C}^{-\nu-2\lambda}}} &\le C \abs{t -s}^{\lambda p} + C \gamma^{p(1-\kappa)}\,,
+\end{align*}
+bounds, which are going to be used later to prove the tightness of the $\left\{Z^{:n:}_\gamma, \gamma \in (0, \frac{1}{3})\right\}$ family, and the joint convergence of the (localized) $(Z^{:1:}_\gamma, \ldots, Z^{:n:}_\gamma)$ processes in law to $(Z^{:1:}, \ldots, Z^{:n:})$ with respect to the topology of $\mathcal{D}(\RR_+, \mathcal{C}^{-\nu})^n$.
+
+\TODO{maybe mention Lemma 4.6, but probably not:}
 \begin{itemize}
-  \item we consider the mild solution of the linearized evolution $$\begin{aligned}dZ_\gamma(t, x) &= \Delta_\gamma Z_\gamma(t, x) dt + dM_\gamma(t, x)\\Z_\gamma(0, x) &= 0 \end{aligned}$$which is $Z_\gamma(t, x) = \int_{r=0}^t P^\gamma_{t-s} dM_\gamma(s, x)$, where $P^\gamma_t = e^{\Delta_\gamma t}$ is the semigroup generated by $\Delta_\gamma X = \frac{\gamma^2}{\epsilon^2}(K_\gamma \star_\epsilon X - X)$. 
-  \item we define $R_{\gamma, t}(s, x) := \int_{r=0}^s P^\gamma_{t-r} dM_\gamma(r, x)~(x \in \Lambda_\epsilon)$  which we can extend to trigonometric polynomials the usual way. This is an integral against a [[càdlàg]] martingale, thus $R_{\gamma ,t}$ is also a [[càdlàg]] martingale for all $x \in \mathbb{T}^2$
-  \begin{itemize}
-    \item we recursively define $R_{\gamma, t}^{:1:} := R_{\gamma, t}$ and $R_{\gamma, t}^{:n:}(s,x) := n\int_{r=0}^s R_{\gamma, t}^{:n-1:}(r^-,x) \,dR_{\gamma, t}(r, x)$, where $r^-$ is the left limit (to make the integrand predictable, which is necessary for integration against cadlag martingales (to make the integral a martingale again))
-    \begin{itemize}
-      \item in order to extend $R_{\gamma, t}^{:n:}$ to $\mathbb{T}^2$, we don't just use trig polys, but we consider the Fourier series $$\hat{R}_{\gamma, t}^{:n:}(s,x) = \frac{1}{4}n\int_{r=0}^s R_{\gamma, t}^{:n-1:}(r^-,x) \,dR_{\gamma, t}(r, x)$$and let $R_{\gamma, t}^{:n:}(s, x) = \frac{1}{4} \sum_{k \in \mathbb{Z}^2} \hat{R}^{:n:}_{\gamma, t}(s, k)e^{i \pi k \cdot x}$.
-    \end{itemize}
-    \item we can now define $Z^{:n:}_\gamma(t, x) = R^{:n:}_{\gamma, t}(t, x)$
-  \end{itemize}
-  \item the goal of this section to obtain bounds on the above quantities. The difficulty is that now we don't have access to Gaussian noise, so no gaussian hypercontractivity (Thm 4.21 in Perkowski) (I guess this is what called Nelson's estimate in this paper). One can replace this with BDG inequality + controlling the jumps (p12, par(-1)).
-  \begin{itemize}
-    \item Lemma 4.1: $$\mathbb{E}\left[\sup_{0\le r \le t} |\mathfrak{I}_n F(r)|^p\right]^{p/2} < \infty$$and actually it gives a much more precise bound, but maybe it'd be more interesting to state this bound for the exact $F$ we are applying it, and $\mathfrak{I}_n$ is just the $n^\text{th}$ iterated Wiener-Itô integral.
-    \item Proposition 4.2: from the previous lemma we can obtain for some $\gamma_0 > 0$, that for every $n\in \mathbb{N}, p \ge 1, \nu > 0, T> 0, 0 \le \lambda \le 1/2, 0 < \kappa \le 1$ there is a constant $C = C(n, p, \nu, T, \lambda, \kappa)$ such that for every $0 \le s \le t \le T$ and $0 < \gamma < \gamma_0$:
-    \begin{itemize}
-      \item $\lVert Z^{:n:}_\gamma(t, \cdot) \rVert^p_{\mathcal{C}^{-\nu - 2\lambda}} \le C t^{\gamma p} + C \gamma^{p(1-\kappa)}$ 
-      \item $\lVert Z^{:n:}_\gamma(t, \cdot) - Z^{:n:}_\gamma(s, \cdot) \rVert^p_{\mathcal{C}^{-\nu - 2\lambda}} \le C \lvert t- s\rvert^{\gamma p} + C \gamma^{p(1-\kappa)}$ 
-      \item $\lVert Z^{:n:}_\gamma(t, \cdot) - R^{:n:}_{\gamma, t}(s, \cdot) \rVert^p_{\mathcal{C}^{-\nu - 2\lambda}} \le C \lvert t- s\rvert^{\gamma p} + C \gamma^{p(1-\kappa)}$ (these are some weaker bound coming from the main claim, but we'll use it in this form. it's unclear so far how the previous lemma was used in this theorem)
-    \end{itemize}
-    \item Lemmas 4.4, 4.5 are for proposition 4.2
     \item Lemma 4.6 seems to be interesting and important: it reflects the fact that Proposition 4.2 is a bit too rough as an estimate, and we can give a much better estimate on the high frequencies of $Z_\gamma$ defined as $Z_\gamma^{\text{high}}(t, x)$:
-  \end{itemize}
 \end{itemize}
 \chapter{Tightness for the linearized system}
 \begin{itemize}
