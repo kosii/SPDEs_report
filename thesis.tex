@@ -20,6 +20,9 @@
 \usepackage[parfill]{parskip} % do not indent new paragraphs
 \usepackage[linktoc=all]{hyperref}
 % \usepackage{cleveref}
+\usepackage{tocloft}
+\setlength{\cftbeforechapskip}{1pt}
+\renewcommand{\cftchapdotsep}{\cftdotsep}   % chapters use dots too
 
 \newcommand{\remarkautorefname}{Remark}
 
@@ -40,9 +43,14 @@
 \usepackage{fancyhdr}
 
 \usepackage{titlesec}
-\titleformat{\chapter}{\bfseries\sffamily}{\huge\Roman{chapter}.}{10pt}{\huge}
+\titleformat{\chapter}{\normalfont\scshape\Large}{\Large\Roman{chapter}.}{10pt}{\Large}
 \titlespacing*{\chapter}{0pt}{5.5ex plus 1ex minus .2ex}{1.3ex plus .2ex}
 \titleclass{\chapter}{straight}
+
+\titleformat{\section}
+  {\normalfont\bfseries\large}
+  {\thesection}{1em}{}
+
 
 \usepackage[
     backend=biber,
@@ -90,6 +98,8 @@
 \newcommand{\Placeholder}{\,\mathrel{\cdot}\,}
 \DeclareMathOperator{\ProjOp}{\mathbf{P}}
 \newcommand{\Convolve}[3][]{#2 \star_{#1} #3}
+\newcommand{\Closure}[1]{\overline{#1}}
+\newcommand{\Bracket}[1]{\left[#1\right]}
 
 \DeclareMathOperator{\DConv}{\stackrel{(d)}{\longrightarrow}}
 \DeclareMathOperator{\PConv}{\stackrel{\PP}{\longrightarrow}}
@@ -113,7 +123,10 @@
 \newtheorem{corollary}{Corollary}[theorem]
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{proposition}[theorem]{Proposition}
-\renewenvironment{proof}{{\bf \emph{Proof:} }}{\hfill $\Box$ \\} 
+\renewenvironment{proof}{{\bf \emph{Proof (idea):} }}{\hfill $\Box$ \\} 
+% \newenvironment{proofsketch}{%
+%   \renewcommand{\proofname}{Proof (sketch)}\proof}{\endproof}
+
 \theoremstyle{remark}
 \newtheorem{remark}[theorem]{Remark}
 
@@ -199,10 +212,27 @@
 
 \begin{document}
 
-\maketitle
+\begin{center}
+    \Large{\textbf{Course Report}\\(Summer Semester 2025)}\\[1em]
+    \normalsize
+    Balázs Kossovics \\[0.25em]
+    Convergence of the Two-Dimensional Dynamic Ising–Kac Model to $\Phi^4_2$\\[0.5em]
+    % Summer Semester 2025
+\end{center}
 
-\newpage
-\setcounter{page}{2}
+\vspace{1em}
+\noindent\textbf{Abstract.} 
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+Pellentesque vitae urna sit amet massa volutpat porttitor. 
+In in magna vel velit pulvinar faucibus. 
+Integer fringilla, neque id bibendum venenatis, nulla nunc fermentum erat, vitae tempor orci lorem at lacus.
+
+\vspace{1.5em}
+
+
+
+% \newpage
+% \setcounter{page}{2}
 
 \tableofcontents
 
@@ -315,11 +345,20 @@ $X_\gamma(t, \cdot)$ was so far defined only for the points $x \in \Lambda_\epsi
   \end{cases}\,,
 \end{align}
 form which we get by inverse Fourier transformation $$\Ext Y(x) \DefiningEquality \frac{1}{4} \sum_{k \in \ZZ^2} \hat{Y}(k) e^{i \pi k \cdot x} = \frac{1}{4} \sum_{k \in \left\{-N, \dots, N\right\}^2} \sum_{y \in \Lambda_\epsilon}\epsilon^2 e^{i \pi k \cdot (x -y)} Y(y)\,.$$
-The extension $\Ext Y$ is smooth, real valued, it's the unique trigonometric polynomial of degree $N$ coinciding with $Y$ on $\Lambda_\epsilon$.
-\TODO{mention lemma a.something about the extension estimate}
-\TODO{mention that unless otherwise stated, we mean extension by $\Ext$}
+The extension $\Ext Y$ is smooth, real valued, and it is the unique trigonometric polynomial of degree $N$ coinciding with $Y$ on $\Lambda_\epsilon$. If there is no confusion, we simply write $Y$ for the continuous extension as well, instead of $\Ext{Y}$, and with one notable exception mentioned later, we always use the $\Ext$ operator to continuously extend $\Lambda_\epsilon \to \RR$ functions to $\TT^2 \to \RR$. The extension works identically for functions of a grid of a higher dimensional torus, and in practice the following lemma allows us to conclude error bounds between continuous extensions of functions defined based on their error on the grid points:
 
-
+\begin{lemma}[{\cite[Lemma A.6]{mourrat2015convergencetwodimensionaldynamicisingkac}}]
+  \label{lemma:A6}
+  For $N \in \NN$, set $\epsilon = \frac{2}{2N + 1}$ and let $$\Lambda_\epsilon = \left\{x \in \epsilon \ZZ^n: -1 < x_i < 1 \text{ for } i = 1, \ldots, n\right\}\,.$$ For any $Z: \Lambda_\epsilon \to \RR$ we define the extension\begin{align*}
+    \Ext{Z}(x) = \sum_{z \in \Lambda_\epsilon}\frac{\epsilon^n}{2^n}Z(z) \prod_{j=1}^n \frac{\sin\left(\frac{\pi}{2}(2N + 1)(x_j - z_j)\right)}{\sin(\frac{\pi}{2}(x_j - z_j))}\,,
+  \end{align*}
+  defined for all $x \in \TT^n$. Then for any $\kappa > 0$, there exists a constant $C = C(\kappa, n)$ such that
+  \begin{align*}
+    \norm{\Ext{Z}}_{L^\infty(\TT^n)} \le C \epsilon^{-\kappa} \norm{Z}_{L^\infty(\Lambda_\epsilon)}\,.
+  \end{align*}
+\end{lemma}
+% \TODO{mention lemma a.something about the extension estimate}
+% \TODO{mention that unless otherwise stated, we mean extension by $\Ext$}
 \section{Main result}
   \begin{itemize}
     \item $\mathcal{D}(\mathbb{R}_+, \mathcal{S})$: $\mathcal{S}$ metric space-valued càdlàg functions on $\mathbb{R}_+$ endowed with the Skorokhod topology
@@ -471,6 +510,7 @@ and moreover $Z^{:n:}_\gamma(t, x) := R^{:n:}_{\gamma, t}(t, x)$\footnote{For $n
 
 Contrary to the $\Phi^4_2$ case, we are not integrating against a Gaussian noise anymore, and furthermore $R^{:n:}_{\gamma, t}(\cdot, x)$ is discontinuous. Thus, instead of exploiting the Gaussian hypercontractivity, the authors introduce a general bound in \cite[Lemma 4.1.]{mourrat2015convergencetwodimensionaldynamicisingkac} for iterated integrals against the $(M_\gamma(\cdot, x))_{t \ge 0}$ martingales to control the higher moments, which will in particular be used on $R^{:n:}_{\gamma, t}$ and $Z^{:n:}_\gamma$. They use a version of BDG, after controlling the errors caused by the discontinuities in the jump process, which leads to
 \begin{proposition}[{\cite[Proposition 4.2.]{mourrat2015convergencetwodimensionaldynamicisingkac}}]
+  \label{prop:bounds_proposition_4.2}
   There exists a constant $\gamma_0 > 0$ such that the following holds. For every $n \in \NN$, $p \ge 1$, $\nu > 0$, $T > 0$, $0\le \lambda \le \frac{1}{2}$ and $0 < \kappa \le 1$, there exists a constant $C = C(n, p, \nu, T, \lambda, \kappa)$ such that for every $0 \le s \le t \le T$ and $0 < \gamma < \gamma_0$,
   \begin{align*}
     \Exp{\sup_{0\le r \le t} \norm{R^{:n:}_{\gamma, t}(r, \Placeholder)}^p_{\mathcal{C}^{-\nu-2\lambda}}} &\le C t^{\lambda p} + C \gamma^{p(1-\kappa)}\,,\\
@@ -484,58 +524,141 @@ As remarked in \cite[Remark 4.3.]{mourrat2015convergencetwodimensionaldynamicisi
     \Exp{\norm{Z^{:n:}_{\gamma}(t, \Placeholder) - Z^{:n:}_{\gamma}(s, \Placeholder)}^p_{\mathcal{C}^{-\nu-2\lambda}}} &\le C \abs{t -s}^{\lambda p} + C \gamma^{p(1-\kappa)}\,,\\
     \Exp{\norm{Z^{:n:}_{\gamma}(r, \Placeholder) - R^{:n:}_{\gamma, t}(s, \Placeholder)}^p_{\mathcal{C}^{-\nu-2\lambda}}} &\le C \abs{t -s}^{\lambda p} + C \gamma^{p(1-\kappa)}\,,
 \end{align*}
-bounds, which are going to be used later to prove the tightness of the $\left\{Z^{:n:}_\gamma, \gamma \in (0, \frac{1}{3})\right\}$ family, and the joint convergence of the (localized) $(Z^{:1:}_\gamma, \ldots, Z^{:n:}_\gamma)$ processes in law to $(Z^{:1:}, \ldots, Z^{:n:})$ with respect to the topology of $\mathcal{D}(\RR_+, \mathcal{C}^{-\nu})^n$.
+bounds, which are going to be used later to prove the tightness of the $\left\{Z^{:n:}_\gamma, \gamma \in (0, \frac{1}{3})\right\}$ family, and the joint convergence of $(Z^{:1:}_\gamma, \ldots, Z^{:n:}_\gamma)$ after a localization to $(Z^{:1:}, \ldots, Z^{:n:})$ in law with respect to the topology of $\mathcal{D}(\RR_+, \mathcal{C}^{-\nu})^n$.
 
+Similarly to the case of $\Phi^4_2$, 
 \TODO{maybe mention Lemma 4.6, but probably not:}
 \begin{itemize}
     \item Lemma 4.6 seems to be interesting and important: it reflects the fact that Proposition 4.2 is a bit too rough as an estimate, and we can give a much better estimate on the high frequencies of $Z_\gamma$ defined as $Z_\gamma^{\text{high}}(t, x)$:
 \end{itemize}
 \chapter{Tightness for the linearized system}
-\begin{itemize}
-  \item Discussion of the terms $Z_\gamma^{:n:}$ and $R_{\gamma, t}^{:n:}$ is continued. After having obtained bounds on the goodness of the approximation in Prop 4.2, we give additional bounds related to the [[predictable quadratic variation]]s (for $M$ [[càdlàg]] $L^2$ martingale it's the unique $\langle M \rangle$ making $M^2 -  \langle M \rangle$ into a martingale) and the [[bracket process]] $[M]_t = M^2_t - 2\int_0^t M(s^-)dM(s)$, namely
-  \begin{itemize}
-    \item a bound on their differences
-    \item a bound on the $L^p$ norm of the $\sup_{x \in \Lambda_\epsilon} [R_{\gamma, t}(\cdot, x)]$ 
-  \end{itemize}
-  \item we define now $E^{:n:}_{\gamma, t}(s, x) = H_n(R_{\gamma, t}(s, x), [R_{\gamma, t}(\cdot, x)]_s) - R^{:n:}_{\gamma, t}(s, x)~(x\in \mathbb{T}^2)$ where $[R_{\gamma, t}(\cdot, x)]_s$ is the trig extension of $[R_{\gamma, t}(\cdot, x)]_s$. The claim of Proposition 5.3 is that we can approximate $R^{:n:}_{\gamma, t}(s, x)$ as a Hermite polynomial with the following error bound:$$\mathbb{E}[\sup_{x\in\mathbb{T}^2}\sup_{0\le s \le t} \lvert E^{:n:}_{\gamma, t}(s, x)\rvert^p]^{1/p} \le C \gamma^{1 - \kappa}$$
-  \begin{itemize}
-    \item does this imply that for some $x$ the minimum error is not necessarily obtained for $s = t$?
-    \item for $x\in \Lambda_{\epsilon}$ is the error $0$? I guess not, since then from Lemma A.6 the whole error would be 0
-  \end{itemize}
-  \item this allows us to conclude the tightness of the processes $Z^{:n:}_\gamma$ on $\mathcal{D}(\mathbb{R}_+, \mathcal{C}^{-\nu})$, which according to Billingsley implies relative compactness. In order to prove tightness, it's enough to prove that the family is tight when restricted to every compact time interval. The statement precisely:
-  \begin{itemize}
-    \item For any fixed $n\in \mathbb{N}$ and any $\nu > 0$, the family $\left\{Z^{:n:}_{\gamma}, \gamma \in (0, 1/3) \right\}$ is tight on $\mathcal{D}(\mathbb{R}_+, \mathcal{C}^{-\nu})$. Any weak limit is supported on $\mathcal{C}(\mathbb{R}_+, \mathcal{C}^{-\nu})$. Furthermore, for any $p \ge 1$ and $T > 0$, we have $$\sup_{\gamma \in (0, 1/3)} \mathbb{E}\left[ \sup_{0 \le t \le T} \lVert Z^{:n:}_\gamma(t, \cdot)\rVert^p_{\mathcal{C}^{-\nu}} \right] < \infty$$
-    \item some interesting points of the proof:
-    \begin{itemize}
-      \item WLOG $\gamma \in (0, \gamma_0)$, we fix $T$, and we prove tightness on $\mathcal{D}([0, T], \mathcal{C}^{-\nu})$
-      \item let $m \in \mathbb{N}$ be fixed later, $p \ge 1, \nu^\prime > 0, \lambda \le (2m)^{-1}$ and $n \in \mathbb{N}$. Then from Proposition 4.2. (in particular claim (4.19) and its consequence Remark 4.3) we have $$\mathbb{E}\left[ \lVert Z_\gamma^{:n:}(t, \cdot) - Z_\gamma^{:n:}(s, \cdot)\rVert^p_{\mathcal{C}^{-\nu^\prime -2\lambda}} \right]\le C\lvert t-s \rvert^{\lambda p}$$
-      \begin{itemize}
-        \item on the other hand: we discretize time: consider $\gamma^m \mathbb{N}_0$  times and we approximate linearly $Z_\gamma^{:n:}$ on this grid. for the linear approximation $\tilde{Z}_\gamma^{:n:}$ we apparently also have $$\mathbb{E}\left[ \lVert \tilde{Z}_\gamma^{:n:}(t, \cdot) - \tilde{Z}_\gamma^{:n:}(s, \cdot)\rVert^p_{\mathcal{C}^{-\nu^\prime -2\lambda}} \right]\le C\lvert t-s \rvert^{\lambda p}$$from the construction of $\tilde{Z}_\gamma^{:n:}$, so we can apply the sufficient Kolmogorov-Chentsov criterion for tightness (Corollary 14.9 form Kallenberg), from which the desired properties follow for $\tilde{Z}^{:n:}_\gamma$
-      \end{itemize}
-      \item now we set up a bound $$\mathbb{E}\left[ \sup_{0 \le t \le T} \sup_{x \in \mathbb{T}^2} \lvert \tilde{Z}^{:n:}_\gamma(t, x) - {Z}^{:n:}_\gamma(t, x) \rvert^p \right]\le C(n, p, T, \kappa) \gamma^{(1-\kappa)p}$$from which we can transfer the properties form $\tilde{Z}^{:n:}_\gamma$ to ${Z}^{:n:}_\gamma$.
-    \end{itemize}
-  \end{itemize}
-\end{itemize}
+In a topological space we call a set $A$ relatively compact, if its closure $\Closure{A}$ is compact. From Prohorov's Theorem \cite[Theorem 5.1. and Theorem 5.2.]{billingsley2013convergence} a family of measures on a Polish space is relatively compact with respect to weak convergence if and only if it is tight. In particular, since we work with a non-standard definition of the Besov space $\mathcal{C}^{-\nu}$, namely as the closure of $C^\infty\left(\TT^2\right)$ under the norm $\norm{\Placeholder}_{\mathcal{C}^{-\nu}}$, we have that $\mathcal{C}^{-\nu}$ is a Polish space \cite[p70]{mourrat2015convergencetwodimensionaldynamicisingkac}. This implies that the Skorokhod space $\mathcal{D}(\RR_+, \mathcal{C}^{-\nu})$ is also a Polish space \cite[Theorem 12.2.]{billingsley2013convergence}. In particular, if the laws of $\mathcal{Z} = \left\{Z^{:n:}_\gamma, \gamma \in (0, \frac{1}{3})\right\}$ are tight, then $Z^{:n:}_\gamma \DConv Z^{:n:}$ as $\gamma \to 0$ if and only if for every sequence $(\gamma_n)_{n \in \NN}$ with $\gamma_n \to 0^+$ the subsequential limits $Z^{:n:}_{\gamma_n}$ exists and coincide.
+
+Similarly to the case of the $\Phi^4_2$ equation, $Z^{:n:}_\gamma$ can be (approximately) written as a Hermite polynomial. The $\gamma_0$ constant in the following proposition is from \cite[Lemma 8.2]{mourrat2015convergencetwodimensionaldynamicisingkac} regarding uniform bounds on the Fourier coefficients of $K_\gamma$ and its derivatives.
+
+\begin{proposition}[{\cite[Proposition 5.3]{mourrat2015convergencetwodimensionaldynamicisingkac}}]
+  For the above $\gamma_0$ and for any $n\in\NN$, $\kappa >0$ and $1 \le p < \infty$, there exists $C = C(nm, p, t, \kappa) > 0$ such that for every $0 < \gamma < \gamma_0$\,
+  \begin{align*}
+    \left(\Exp{\sup_{x \in \TT^2} \sup_{0 \le s \le t} \abs{E^{:n:}_{\gamma, t}(s, x)}^p}\right)^{1/p} \le C \gamma^{1 - \kappa}\,
+  \end{align*}
+  where $E^{:n:}_{\gamma, t}(s, x) = H_n(R_{\gamma, t}(s, x), \Bracket{R_{\gamma, t}(\Placeholder, x)}_s) - R^{:n:}_{\gamma, t}(s, x)$ and $\Bracket{M}_t$ is the bracket process defind for any square-integrable càdlàg martingale as $\Bracket{M}_t = M^2(t) - 2 \int_{0}^{t}M^{s^{-}} dM(s)$.
+\end{proposition}
+This approximate representation of $Z_\gamma^{:n:}$ as Hermite polynomials allows us to show tightness of the 
+% \begin{itemize}
+%   \item Discussion of the terms $Z_\gamma^{:n:}$ and $R_{\gamma, t}^{:n:}$ is continued. After having obtained bounds on the goodness of the approximation in Prop 4.2, we give additional bounds related to the [[predictable quadratic variation]]s (for $M$ [[càdlàg]] $L^2$ martingale it's the unique $\langle M \rangle$ making $M^2 -  \langle M \rangle$ into a martingale) and the [[bracket process]] $[M]_t = M^2_t - 2\int_0^t M(s^-)dM(s)$, namely
+%   \begin{itemize}
+%     \item a bound on their differences
+%     \item a bound on the $L^p$ norm of the $\sup_{x \in \Lambda_\epsilon} [R_{\gamma, t}(\cdot, x)]$ 
+%   \end{itemize}
+%   \item we define now $E^{:n:}_{\gamma, t}(s, x) = H_n(R_{\gamma, t}(s, x), [R_{\gamma, t}(\cdot, x)]_s) - R^{:n:}_{\gamma, t}(s, x)~(x\in \mathbb{T}^2)$ where $[R_{\gamma, t}(\cdot, x)]_s$ is the trig extension of $[R_{\gamma, t}(\cdot, x)]_s$. The claim of Proposition 5.3 is that we can approximate $R^{:n:}_{\gamma, t}(s, x)$ as a Hermite polynomial with the following error bound:$$\mathbb{E}[\sup_{x\in\mathbb{T}^2}\sup_{0\le s \le t} \lvert E^{:n:}_{\gamma, t}(s, x)\rvert^p]^{1/p} \le C \gamma^{1 - \kappa}$$
+%   \begin{itemize}
+%     \item does this imply that for some $x$ the minimum error is not necessarily obtained for $s = t$?
+%     \item for $x\in \Lambda_{\epsilon}$ is the error $0$? I guess not, since then from Lemma A.6 the whole error would be 0
+%   \end{itemize}
+% \end{itemize}
+
+
+\begin{proposition}
+  \label{prop:Z_is_tight}
+  For any fixed $n\in \mathbb{N}$ and any $\nu > 0$, the family $\left\{Z^{:n:}_{\gamma}, \gamma \in (0, 1/3) \right\}$ is tight on $\mathcal{D}(\mathbb{R}_+, \mathcal{C}^{-\nu})$. Any weak limit is supported on $\mathcal{C}(\mathbb{R}_+, \mathcal{C}^{-\nu})$. Furthermore, for any $p \ge 1$ and $T > 0$, we have 
+  \begin{align}
+    \label{eq:uniform_bound_stuff}
+    \sup_{\gamma \in (0, 1/3)} \mathbb{E}\left[ \sup_{0 \le t \le T} \lVert Z^{:n:}_\gamma(t, \cdot)\rVert^p_{\mathcal{C}^{-\nu}} \right] < \infty\,.
+  \end{align}
+\end{proposition}
+\begin{proof}
+  Since we are only interested in what is happening as $\gamma$ goes to $0$, we can further restrict $\gamma$ to $(0, \gamma_0)$ for $\gamma_0$ from \autoref{prop:bounds_proposition_4.2}. Moreover, since for the tightness of the law of some processes in $\mathcal{D}(\RR_+,\mathcal{C}^{-\nu})$ it is sufficient to prove that the law of the processes restricted to all compact time intervals are tight \cite{mourrat2015convergencetwodimensionaldynamicisingkac}. Let $T > 0$ and we show tightness on $\mathcal{D}([0, T], \mathcal{C}^{-\nu}]$.
+
+  Let $m\in\NN$ to be fixed later. From the estimates \autoref{prop:bounds_proposition_4.2} we get for all $s \neq t \in \gamma^m \NO$, $p\ge 1$ $\nu^\prime > 0$, $\lambda \le \frac{1}{2m}$ and $n \in \NN$ for some $C = C(n, p, \nu^\prime, T, \lambda)$ constant 
+  \begin{align}
+    \label{eq:almost_kolmogorov_criteria}
+    \Exp{\norm{Z^{:n:}_\gamma(t, \cdot) - Z^{:n:}_\gamma(s, \cdot)}^p_{C^{-\nu^\prime - 2\lambda}}} \le C \left(\abs{t - s}^\lambda + \gamma^{\frac{1}{2}}\right)^p \le C \abs{t - s}^{\lambda p}\,.
+  \end{align}
+  Note, that for the second inequality $\abs{t - s} \ge \gamma^m$ was crucial, thus we cannot use a Kolmogorov style criteria directly. We construct instead a continuous linear interpolation $\tilde{Z}^{:n:}_\gamma$ of $Z^{:n:}_\gamma$ such that they coincide on discrete times $\gamma^m \NO$. We have now
+  \begin{align}
+    \Exp{\norm{\tilde{Z}^{:n:}_\gamma(t, \cdot) - \tilde{Z}^{:n:}_\gamma(s, \cdot)}^p_{C^{-\nu^\prime - 2\lambda}}} \le C \abs{t - s}^{\lambda p}\,.    
+  \end{align}
+  for all $s, t \in [0, T]$, and thus from
+  \begin{corollary}[Kolmogorov Tightness Criterion, {\cite[Corollary 14.9]{kallenberg2013foundations}}]
+    Let $X^1, X^2, \ldots$ be continuous processes on $R^d$ with values in a separable, complete metric space $(S, \rho)$. Assume that $(X_0^n)$ is tight in $S$ and that for some constants $a, b > 0$
+    \begin{align*}
+      \Exp{\rho(X^n_s, X^n_t)^a} \lesssim \abs{s - t}^{d + b}\,, \quad s, t \in \RR^d, n \in \NN\,
+    \end{align*}
+    uniformly in $n$. Then $(X^n)$ is tight in $\mathcal{C}(\RR^d, S)$ and for every $c \in (0, b/a)$ the limiting processes are a.s. locally Hölder continous with exponent $c$.
+  \end{corollary}
+  we get immediately for $\hat{\mathcal{Z}} \DefiningEquality \left\{\hat{Z}^{:n:}_{\gamma}, \gamma \in (0, 1/3)\right\}$ tightness, continuity of the subsequential limits, and the bound \eqref{eq:uniform_bound_stuff} from the almost sure Hölder continuity. The remaining of the proof is about proving for any $\kappa > 0$ and $p\ge1$ the
+  \begin{align*}
+    \Exp{\sup_{0 \le t \le T} \sup_{x \in \TT^2} \abs{ \hat{Z}^{:n:}_\gamma(t, x) - Z^{:n:}_\gamma(t, x)}^p} \le C(n, p, T, \kappa) \gamma^{(1 - \kappa) p}
+  \end{align*}
+  bound which lets us transfer the results obtained for the family $\hat{\mathcal{Z}}$ to $\mathcal{Z}$. 
+\end{proof}
+
 \chapter{Convergence in law of the linearised system}
+After showing tightness of $\mathcal{Z} = \left\{Z^{:n:}_\gamma, \gamma\in(0, 1/3)\right\}$ it still remains to show the convergence of $Z^{:n:}_\gamma$ as $\gamma \to 0$. In this section we show a partial result, namely the convergence of $Z^{:n:}_{\gamma, \mathfrak{m}}$ to $Z$ (the stochastic convolution in the $\Phi^4_2$ equation). This $Z^{:n:}_{\gamma, \mathfrak{m}}$ is identical to $Z^{:n:}_{\gamma}$ up until a random time $\tau_{\gamma, \mathfrak{m}}$, beyond which we extend it by modifying first the dynamics of $(\sigma(t, \cdot))_{t \ge 0}$, and equating $^{:n:}_{\gamma, \mathfrak{m}}$ to the stochastic convolution from mild formulation of the evolution equation of this new Markov chain.
+
+Thus for a fixed $\nu \in \left(0, \frac{1}{2}\right)$, and $\mathfrak{m} > 1$ and $0 < \gamma < 1$ arbitrary, let us define
+\begin{align}
+  \tau_{\gamma, \mathfrak{m}} \DefiningEquality \inf \left\{t \ge 0: \norm{X_\gamma(t, \Placeholder)}_{\mathcal{C}^{-\nu}} \ge \mathfrak{m}\right\}\,.
+\end{align}
+and define a new jump process for $k \in \Lambda_N$ as 
+\begin{align*}
+  \sigma_{\gamma, \mathfrak{m}} \DefiningEquality \begin{cases}
+    \sigma(t, k)&\text{if } t < \frac{\tau_{\gamma, \mathfrak{m}}}{\alpha}\\
+    \sigma^\prime(t, k)&\text{otherwise}
+  \end{cases}\,,
+\end{align*}
+where $\sigma^\prime_{\gamma, \mathfrak{m}}(t, k)$ is a different Markov process, where in the infinitesimal generator we replaced the jump rates with $\frac{1}{2}$. We can thus define $h_{\gamma, \mathfrak{m}}(t, k) = \Convolve{\sigma_{\gamma,\mathfrak{m}}}{\kappa_\gamma}(k)~(t \ge 0, k \in \Lambda_N)$ and \begin{align*}
+  m_{\gamma, \mathfrak{m}}(t, k) \DefiningEquality h_{\gamma, \mathfrak{m}}(t, k) - h_{\gamma, \mathfrak{m}}(0, k) - \int_{0}^{t} \mathcal{L}^s_{\gamma, \mathfrak{m}} h_{\gamma, \mathfrak{m}}(s, k)\,ds\,
+\end{align*}
+where $\mathcal{L}^s_{\gamma, \mathfrak{m}}$ is the infinitesimal generator defined similary as before, but with jump rates $$c^s_{\gamma, \mathfrak{m}} = \begin{cases}
+  c_\gamma&\text{if }s < \frac{\tau_{\gamma, \mathfrak{m}}}{\alpha}\\
+  \frac{1}{2}&\text{otherwise}
+\end{cases}.$$
+
+\begin{remark}
+  \label{remark:all_previous_results_hold}
+  For every previously defined process we can define the corresponding modified version, indexed by ${\gamma, \mathfrak{m}}$ instead of $\gamma$, and all previous results and estimates still hold, since they are independent of the jump rates (besides requiring them to be $\le 1$) \cite[p39]{mourrat2015convergencetwodimensionaldynamicisingkac}.
+\end{remark}
+
+Even though we have no control on $X_\gamma$ yet, the reason for such a construction was necessary, since later some error bounds will depend on $\norm{X_\gamma(t, \Placeholder)}_{\mathcal{C}^{-\nu}}$, and we want to bound the corresponding terms by $\mathfrak{m}$.
+
+\begin{theorem}[Convergence of $Z_{\gamma,\mathfrak{m}}$, {\cite[Theorem 6.1]{mourrat2015convergencetwodimensionaldynamicisingkac}}]
+  Let $\nu \in (0, 1/2)$ and $\mathfrak{m} > 1$. As $\gamma$ tends to $0$, the processes $Z_{\gamma, \mathfrak{m}}$ converge in law to $Z$ with respect to the Skorokhod topology on $\mathcal{D}(\RR_+, \mathcal{C}^{-\nu})$, where $Z$ is the stochastic convolution from the $\Phi^4_2$ equation.
+\end{theorem}
+\begin{proof}
+  Since from \autoref{prop:Z_is_tight} the family $\mathcal{Z} \DefiningEquality \left\{Z_\gamma, \gamma \in (0, \frac{1}{3})\right\}$ was tight, from \autoref{remark:all_previous_results_hold} we have that $\mathcal{Z}_\mathfrak{m} \DefiningEquality \left\{Z_{\gamma, \mathfrak{m}}, \gamma \in (0, \frac{1}{3})\right\}$ is also tight.
+
+  Since $\mathcal{Z}_\mathfrak{m}$ is tight, for any $\gamma_n \to 0$ let $\overline{Z}$ denote the subsequential limit of $Z_{\gamma_{k_n}, \mathfrak{m}}$ as $n \to \infty$. We need to show, that $Z \DEquiv \overline{Z}$. For that, the idea is to use the following characterization of the solution of the stochastic heat equation:
+
+  \begin{theorem}
+    Let $\overline{Z}$ be a random process in $\mathcal{C}(\RR_+, \mathcal{S}^\prime(\TT^2))$. For every $\phi \in \mathcal{C}^\infty(\TT^2)$, define
+    \begin{align*}
+      \mathcal{M}_\phi(t) = (\overline{Z}(t), \phi) - (\overline{Z}(0), \phi) - \int_0^t(\overline{Z}(s), \Delta \phi)\,ds\,,
+    \end{align*}
+    where $(\overline{Z}(s), \phi)$ means the evaluation of $\overline{Z}$ against $\phi$, and
+    \begin{align*}
+      \Gamma_\phi(t) = \mathcal{M}_\phi^2(t) - 2 t \norm{\phi}^2_{L^2}\,.
+    \end{align*}
+    If for every $\phi$, the processes $(\mathcal{M}_\phi(t))_{t \ge 0}$ and $(\Gamma_\phi(t))_{t \ge 0}$ are local martingales, then $\overline{Z}$ has the same law as the solution $Z$ of the stochastic heat equation
+    \begin{align*}
+      \begin{cases}
+        dZ = \Delta Z\,dt + \sqrt{2}\,dW\\
+        Z(0, \cdot) = z_0
+      \end{cases}
+    \end{align*}
+  \end{theorem}
+  The remainder of the proof shows the validity of the above theorem for every $\phi \in \mathcal{C}^\infty(\TT^2)$ trigonometric polynomials, which is sufficient according to \cite[Remark C.4]{mourrat2015convergencetwodimensionaldynamicisingkac}
+\end{proof}
+
 \begin{itemize}
-  \item goal is to show that $Z_\gamma$ converges to $Z$ in law, and so do $Z_\gamma^{:n:}$ to $Z^{:n:}$. Problem: we can only do this up to a stopping time which depends on $X_\gamma$, the non-linear dynamics, about which we know yet nothing. For any $\nu \in (0, 1/2), \mathfrak{m} > 1$ and $0 < \gamma < 1$, let$$\tau_{\gamma, \mathfrak{m}} = \inf \left\{ t \ge 0 : \lVert X_\gamma(t, \cdot) \rVert_{\mathcal{C}^{-\nu}} \ge \mathfrak{m}\right\}$$and we set up $\sigma_{\gamma, \mathfrak{m}}(t, k)$ which is the same as $\sigma(t, k)$ up until $\tau_{\gamma, \mathfrak{m}}$, and essentially random afterwards ("jumps occurring for every $t > \tau_{\gamma, \mathfrak{m}}/\alpha$ and every $k\in \Lambda_N$ at rate $1/2$, independently from $\sigma$"). We construct the rest the same, $\sigma$ replaced by $\sigma_{\gamma, \mathfrak{m}}$, and all the properties hold, since the only property of jump rates were that they are $\le 1$, and this still holds.
   \item Main theorems of this section:
   \begin{enumerate}
-    \item Let $\nu \in (0, 1/2)$ and $\mathfrak{m} > 1$. As $\gamma$ tends to $0$, the process $Z_{\gamma, \mathfrak{m}}$ converges in law to $Z$ with respect to the Skorokhod topology on $\mathcal{D}(\mathbb{R}_+, \mathcal{C}^{-\nu})$, where $Z$ is defined in Proposition 3.1 ("the stochastic convolution"), where the main idea of the proof is
-    \begin{itemize}
-      \item Since all the previous properties of the previously constructed objects still remains true for the newly constructed process, so in particular we have tightness. Consider any subsequential limit $\bar{Z}$. From the martingale characterization of the solution of the stochastic heat equation we can see that $Z = \bar{Z}$.
-    \end{itemize}
     \item (Convergence of $Z_\gamma^{:n:}$). For every $\mathfrak{m} \in \mathbb{N}$ and $n \in \mathbb{N}$, the processes $(Z_{\gamma, \mathfrak{m}}^{:1:}, \ldots, Z_{\gamma, \mathfrak{m}}^{:n:})$ converge (jointly) in law to $(Z^{:1:}, \ldots, Z^{:n:})$ with respect to the topology of $\mathcal{D}(\mathbb{R}_+, \mathcal{C}^{-\nu})^n$.
     \begin{itemize}
       \item the proof idea is to show it through the convergence of finite dimensional distributions (look up the exact result in Billingsley)
       \item Lemma A.6 is used again for convergence on non-grid points (but maybe in an argument that I won't even present)
     \end{itemize}
   \end{enumerate}
-  \item Questions
-  \begin{itemize}
-    \item So does this converge in law to $Z$, because for any $\mathfrak{m} >1$ we have that $\tau_{\gamma, \mathfrak{m}} \to \infty$ as $\gamma \to 0$?
-    \item Do we already have that $X_{\gamma, \mathfrak{m}}$ converges to $X$ in law?
-  \end{itemize}
 \end{itemize}
 \chapter{Analysis of the non-linear equation}
 We consider $\nu > 0$ small enough and fixed, and some initial data $X^0 \in \mathcal{C}^{-\nu}$ also fixed throughout the section. We denote $X \in \mathcal{C}(\mathbb{R}_+, \mathcal{C})$ the solution of the renormalized $\Phi^4_2$ equation as constructed in Section 3.
@@ -562,26 +685,16 @@ We denoted with $X_\gamma$ the rescaled field and it satisfied the evolution equ
   \end{itemize}
   \item Now we want to bound the difference between $\overline{X}_{\gamma, \mathfrak{m}}$ (the result got from the solution operator $\mathcal{S}_T$) and $X_\gamma$ (the process from the evolution equation, we can also eventually consider $X_{\gamma, \mathfrak{m}}$, if it's more advantageous). The main goal of the remaining is to obtain the following bound for every fixed $\mathfrak{m} \ge 1, T > 0$ and bounded uniformly continuous function $F: \mathcal{D}([0, T], \mathcal{C}^{-\nu}) \to \mathbb{R}$: $$\limsup_{\gamma \to 0} \mathbb{E}\left[\lvert F(\overline{X}_{\gamma, \mathfrak{m}}) - F({X}_{\gamma, \mathfrak{m}})\rvert\right] = 0\,.$$Combined with Lemma 7.2 we immediately get the convergence of ${X}_{\gamma, \mathfrak{m}}$ to $X$ in law for every fixed $\mathfrak{m} \ge 1$ (p49). This is proven in Lemmas 7.3, 7.4, 7.5
 \end{itemize}
-\chapter{Appendices}
-\begin{itemize}
-  \item Theorem C1: characterization of the solution of the stochastic heat equation through the uniqueness of the martingale problem (it's used in section 6)
-  \item Mention at A.6 at a convenient point, it seems to be an important thing, especially 
-\end{itemize}
-
 
 \chapter{Remarks}
-\section{Important notes from Billingsley}
-\begin{itemize}
-  \item If $\Pi$ family of probability measures is tight, then it's relatively compact.
-\end{itemize}
 \section{Points to observe}
 \begin{itemize}
   \item for parameter $\kappa$ we only require arbitrary $> 0$, but form the type of estimates we get actually only $\kappa \in (0, 1)$ would make sense.
   \item we often restrict ourselves to $\gamma \in (0, \gamma_0)$, where $\gamma_0$ is coming from Lemma 8.2 and Proposition 4.2
 \end{itemize}
 
-% \medskip
-\newpage
+\medskip
+% \newpage
 % Bibliography can go on the same page with the appendix.
 \printbibliography
 \end{document}
