@@ -373,6 +373,7 @@ The extension $\Ext Y$ is smooth, real valued, and it is the unique trigonometri
 \end{theorem}
 \TODO{rough sketch of the proof idea}
 \chapter{Solution theory of $\Phi^4_2$}
+\label{chapter:solution_theory_of_phi_4_2}
 If we considered the mild formulation 
 \begin{align}
   X_t = P_t X_0 + \int_{0}^{t}P_{t-s}\left(-\frac{1}{3}X^3(s) + A X(s)\right)\,ds + \int_0^t P_{t-s} \xi(s) \,ds
@@ -660,23 +661,33 @@ for all $K \in \NN$, times $t_1 < t_2 < \ldots < t_K$ and $F: (\mathcal{C}^{-\nu
 \end{theorem}
 
 \chapter{Analysis of the non-linear equation}
-We consider $\nu > 0$ small enough and fixed, and some initial data $X^0 \in \mathcal{C}^{-\nu}$ also fixed throughout the section. We denote $X \in \mathcal{C}(\mathbb{R}_+, \mathcal{C})$ the solution of the renormalized $\Phi^4_2$ equation as constructed in Section 3.
+We consider $\nu > 0$ small enough and fixed, and some initial data $X^0 \in \mathcal{C}^{-\nu}$ also fixed throughout the section. We denote $X \in \mathcal{C}(\mathbb{R}_+, \mathcal{C})$ the solution of the renormalized $\Phi^4_2$ equation as constructed in \fullref{chapter:solution_theory_of_phi_4_2}. $X_\gamma$ denotes the rescaled field and it satisfies the evolution equation given in mild form as
+\begin{align*}
+  \begin{split}
+      X_\gamma(t, x) = P^\gamma_t X^0_\gamma &+ \int_{0}^{t} P^\gamma_{t-s} \Convolve[\epsilon]{K_\gamma}{\biggl(-\frac{\beta^3}{3}X^3_\gamma(s, \Placeholder) + (\mathfrak{c}_\gamma + A)X_\gamma(s, \Placeholder)\\ 
+      &+E_\gamma(s, \Placeholder)\biggr)}\,ds + Z_\gamma(t, \Placeholder)
+  \end{split}\,,
+\end{align*}
+which so far only holds on $\Lambda_\epsilon$, since the $\Ext$ operator does not commutes with cubing $X_\gamma$. To fix this, we introduce a new error term, basically by adjusting the term with the difference of $\Ext{(X^3_\gamma(s, \Placeholder))}$ and $\left(\Ext X_\gamma(s, \Placeholder)\right)^3$. With this new error term $\operatorname{Err}^{(1)}_\gamma(s, \Placeholder)$ the evolution equation on $\TT^2$ reads as 
+  \begin{align}
+    \label{eq:evolution_equation_with_new_errors}
+    \begin{split}
+        X_\gamma(t, x) = P^\gamma_t X^0_\gamma &+ \int_{0}^{t} P^\gamma_{t-s} \Convolve[\epsilon]{K_\gamma}{\biggl(-\frac{1}{3}X^3_\gamma(s, \Placeholder) + (\mathfrak{c}_\gamma(s, \Placeholder) + A(s))X_\gamma(s, \Placeholder)\\ 
+        &+\operatorname{Err}^{(1)}(s, \Placeholder)\biggr)}\,ds + Z_\gamma(t, \Placeholder)
+    \end{split}\,,
+  \end{align}
+where the precise bound on $\norm{\operatorname{Err}^{(1)}(s, \Placeholder)}_{L^\infty(\TT^2)}$ can be found in \cite[Lemma 7.2]{mourrat2015convergencetwodimensionaldynamicisingkac}.
 
-We denoted with $X_\gamma$ the rescaled field and it satisfied the evolution equation on the points of $\Lambda_\epsilon$. The problem is that it's not true anymore for $\mathbb{T}^2 \setminus \Lambda_\epsilon$ (since Ext does not commute with cubing), so we have to derive a new equation.
+Now for $\mathfrak{m} \ge 1$ we introduce a new process $X_{\gamma, \mathfrak{m}}(t, x)~(x \ge 0, x \in \TT^2)$ as the solution of \eqref{eq:evolution_equation_with_new_errors} with $Z_\gamma$ replaced by $Z_{\gamma, \mathfrak{m}}$ and $\operatorname{Err}^{(1)}$ replaced by
+\begin{align*}
+  \operatorname{Err}^{(1)}_\mathfrak{m}(s) \DefiningEquality \begin{cases}
+    \operatorname{Err}^{(1)}(s)&\text{if }s \le \tau_{\gamma,\mathfrak{m}}\,,\\
+    0&\text{otherwise}\,.
+  \end{cases} 
+\end{align*}
+We get form a standard ODE argument the existence and uniqueness of this $X_{\gamma, \mathfrak{m}}$ \cite{mourrat2015convergencetwodimensionaldynamicisingkac}, which in particular coincides with $X_\gamma$ on the $\left\{t < \tau_{\gamma, \mathfrak{m}}\right\}$ event. Since $\tau_{\gamma,\mathfrak{m}}$ depends on 
+
 \begin{itemize}
-  \item this is done in Lemma 7.1, with a new error term $\operatorname{Err}^{(1)}(s, \cdot)$, which is bounded by something for which it's not immediately clear that converges to $0$ as $\gamma \to 0$ (at least to me ), and in particular that bound is random (because)
-  \item After this technical lemma, we construct a new process:
-  \begin{itemize}
-    \item in the evolution equation we replace $Z_\gamma$ with $Z_{\gamma, \mathfrak{m}}$ and $\operatorname{Err}^{(1)}$ with $\operatorname{Err}^{(1)}_\mathfrak{m}(s) = \begin{cases}\operatorname{Err}^{(1)}(s)&s \le \tau_{\gamma, \mathfrak{m}}\\ 0 &\text{otherwise}\end{cases}$  and consider a solution $X_{\gamma, \mathfrak{m}}$, which  exists from an elementary ODE argument 
-    \begin{itemize}
-      \item $\textcolor{red}{\text{fixpoint argument? does the solution exists for the whole } \mathbb{R}_+ \text{ almost surely?}}$  
-    \end{itemize}
-    \item in particular the $X_{\gamma, \mathfrak{m}} = X_\gamma$ on the event $\left\{ t < \tau_{\gamma, \mathfrak{m}}\right\}$ 
-    \begin{itemize}
-      \item $\textcolor{red}{\text{why not with }\le\text{?}}$ 
-      \item using this fact we can apply the previous error bound to $\operatorname{Err}^{(1)}_\mathfrak{m}$  up to $\tau_{\gamma, \mathfrak{m}}$, after which the error is simply $0$.
-    \end{itemize}
-  \end{itemize}
   \item We construct another approximation of $X_\gamma$. For $0 \le t \le T$ we define:$$\overline{X}_{\gamma, \mathfrak{m}}(t, \cdot) = P_t X^0 + Z_{\gamma, \mathfrak{m}}(t, \cdot) + \mathcal{S}_T(Z_{\gamma, \mathfrak{m}}, Z^{:2:}_{\gamma, \mathfrak{m}}, Z_{\gamma, \mathfrak{m}}^{:3:})(t, \cdot)$$where $\mathcal{S}_T$ is the solution operator for some fixed $X^0$ initial datum. 
   \begin{itemize}
     \item so here $\overline{X}_{\gamma, \mathfrak{m}}$ is the solution of the following SPDE: $\textcolor{red}{\text{figure this out!}}$ 
