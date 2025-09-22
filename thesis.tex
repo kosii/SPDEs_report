@@ -650,16 +650,15 @@ Even though we have no control on $X_\gamma$ yet, the reason for such a construc
   The remainder of the proof shows the validity of the above theorem for every $\phi \in \mathcal{C}^\infty(\TT^2)$ trigonometric polynomials, which is sufficient according to \cite[Remark C.4]{mourrat2015convergencetwodimensionaldynamicisingkac}
 \end{proof}
 
-\begin{itemize}
-  \item Main theorems of this section:
-  \begin{enumerate}
-    \item (Convergence of $Z_\gamma^{:n:}$). For every $\mathfrak{m} \in \mathbb{N}$ and $n \in \mathbb{N}$, the processes $(Z_{\gamma, \mathfrak{m}}^{:1:}, \ldots, Z_{\gamma, \mathfrak{m}}^{:n:})$ converge (jointly) in law to $(Z^{:1:}, \ldots, Z^{:n:})$ with respect to the topology of $\mathcal{D}(\mathbb{R}_+, \mathcal{C}^{-\nu})^n$.
-    \begin{itemize}
-      \item the proof idea is to show it through the convergence of finite dimensional distributions (look up the exact result in Billingsley)
-      \item Lemma A.6 is used again for convergence on non-grid points (but maybe in an argument that I won't even present)
-    \end{itemize}
-  \end{enumerate}
-\end{itemize}
+As for the joint convergence of $(Z_{\gamma, \mathfrak{m}}^{:1:}, \ldots, Z_{\gamma, \mathfrak{m}}^{:n:})$ in law to $(Z^{:1:}, \ldots, Z^{:n:})$ with respect to the topology of $\mathcal{D}(\mathbb{R}_+, \mathcal{C}^{-\nu})^n$, we can first conclude that since $\mathcal{Z}^{:n:}_\mathfrak{m} = \left\{Z_{\gamma, \mathfrak{m}}^{:n:}, \gamma \in (0, 1/3)\right\}$ is tight, the family $\left\{(Z_{\gamma, \mathfrak{m}}^{:1:}, \ldots, Z_{\gamma, \mathfrak{m}}^{:n:}), \gamma \in (0, 1/3)\right\}$ is tight too with respect to the topolgy of $\mathcal{D}(\mathbb{R}_+, \mathcal{C}^{-\nu})^n$. Hence it suffices to verify the convergence of the finite dimensional distributions, which is equivalent to the convergence 
+\begin{align*}
+  \lim_{\gamma \to 0}\abs{\Exp{F(\bf{Z_\gamma(t_1), \ldots, Z_\gamma(t_K)})} - \Exp{F(\bf{Z(t_1), \ldots, Z(t_K)})}}
+\end{align*}
+for all $K \in \NN$, times $t_1 < t_2 < \ldots < t_K$ and $F: (\mathcal{C}^{-\nu})^{n \times K} \to \mathbb{R}$ bounded and uniformly continuous functions, where $\bf{Z}_\gamma = (Z^{:1:}_{\gamma, \mathfrak{m}}, \ldots, Z^{:n:}_{\gamma, \mathfrak{m}} )$ and $\bf{Z} = (Z^{:1:}, \ldots, Z^{:n:} )$, which is the strategy for the proof of 
+\begin{theorem}[{\cite[Theorem 6.2]{mourrat2015convergencetwodimensionaldynamicisingkac}}]
+  For every $\mathfrak{m} \in \NN$ and $n \in \NN$, the processes $(Z^{:1:}_{\gamma, \mathfrak{m}}, \ldots, Z^{:n:}_{\gamma, \mathfrak{m}} )$ converge (jointly) in law to $(Z^{:1:}, \ldots, Z^{:n:} )$ with respect to the topology of $\mathcal{D}(\RR_+, \mathcal{C}^{-\nu})^n$.
+\end{theorem}
+
 \chapter{Analysis of the non-linear equation}
 We consider $\nu > 0$ small enough and fixed, and some initial data $X^0 \in \mathcal{C}^{-\nu}$ also fixed throughout the section. We denote $X \in \mathcal{C}(\mathbb{R}_+, \mathcal{C})$ the solution of the renormalized $\Phi^4_2$ equation as constructed in Section 3.
 
