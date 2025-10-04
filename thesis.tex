@@ -213,59 +213,50 @@
 \begin{document}
 
 \begin{center}
-    \Large{\textbf{Course Report}\\(Summer Semester 2025)}\\[1em]
+    \Large{{\textsc{Course Report for Stochastics IV.}}}\\[1em]
     \normalsize
     Balázs Kossovics \\[0.25em]
-    Convergence of the Two-Dimensional Dynamic Ising–Kac Model to $\Phi^4_2$\\[0.5em]
+    % Convergence of the Two-Dimensional Dynamic Ising–Kac Model to $\Phi^4_2$\\[0.5em]
     % Summer Semester 2025
 \end{center}
 
 \vspace{1em}
-\noindent\textbf{Abstract.} 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-Pellentesque vitae urna sit amet massa volutpat porttitor. 
-In in magna vel velit pulvinar faucibus. 
-Integer fringilla, neque id bibendum venenatis, nulla nunc fermentum erat, vitae tempor orci lorem at lacus.
-
-\vspace{1.5em}
-
-
-
-% \newpage
-% \setcounter{page}{2}
+\noindent\textbf{Abstract.} In this report we present a summary of \textit{Convergence of the Two-Dimensional Dynamic Ising-Kac Model to $\Phi^4_2$} from Jean-Christophe Mourrat and Hendrik Weber, whose convergence result gives a physical interpretation to the need for renormalization in the $\Phi^4_2$ equation. We first introduce the Ising-Kac model and set up an evolution equation for the discrete system, then briefly recall the solution theory of the $\Phi^4_2$ equation, and state the main convergence result of the paper. In the remainder we outline its proof, first focusing on the linearized system (bounds, tightness and convergence), and later using these results to give a sketch of the convergence of the non-linear equation.
+% \vspace{1.5em}
 
 \tableofcontents
 
 \chapter{Introducion}
-The Ising model is a stochastic model of ferromagnetism. On the microscopic level we consider a discrete system of interacting particles on the $\Lambda_N = \ZZ^2 / (2N+1)\ZZ^2$ grid for some $N \in \NN$, where in every grid point sits a spin with exactly two possible state: $\pm1$ (intuitively: the spin pointing in the direction of either the north or the south). The set of corresponding spin configurations will be denoted by $\Sigma_N = \left\{-1, 1\right\}^{\Lambda_N}$. In the standard Ising model the particles are interacting only with their immediate neighbours, while in the Ising-Kac model the particles can influence the behaviour of the other particles in a small radius proportional to a scaling factor $\gamma > 0$. To build intuition about the behaviour of the system, we can imagine to have a probability distribution on $\Sigma_N$ depending on the inverse temperature $\beta > 0$, under which configurations with close-by spins aligned in the same direction have in general higher probability, than configurations where the spins are completely disorganised. The system is more likely to go from a less probable configuration to a more probable one, but the reverse transition is also not excluded, especially at low inverse temperatures. The locally averaged field describes the strength of the field at each gridpoint, and we will be interested in the fluctuations of this field after suitable renormalization and continuous extension to $\TT^2$. In particular one can show that this random process describing the fluctuations of the field converges in law to the solution of the $\Phi^4_2$ equation 
+The Ising model is a stochastic model of ferromagnetism. On the microscopic level we consider a discrete system of interacting particles on the $\Lambda_N = \ZZ^2 / (2N+1)\ZZ^2$ grid for some $N \in \NN$ (which we identify with $\left\{-N, \dots, N\right\}^2$), where in every grid point sits a spin with exactly two possible state: $\pm1$ (intuitively: the spin pointing in the direction of either the north or the south). The set of corresponding spin configurations will be denoted by $\Sigma_N = \left\{-1, 1\right\}^{\Lambda_N}$. In the standard Ising model the particles are interacting only with their immediate neighbours, while in the Ising-Kac model the particles can influence the behaviour of the other particles in a small radius proportional to a scaling factor $\gamma > 0$. To build intuition about the behaviour of the system, we can imagine to have a probability distribution on $\Sigma_N$, which also depends on the inverse temperature $\beta > 0$. Under this distribution, configurations with close-by spins aligned in the same direction are more probable, than configurations with completely disorganised spins. The system is more likely to go from a less probable configuration to a more probable one, but the reverse transition is also not excluded, especially at low inverse temperatures. The locally averaged field describes the strength of the field at each gridpoint, and we will be interested in the fluctuations of this field after suitable renormalization and continuous extension to $\TT^2$. In particular one can show that this random process describing the fluctuations of the field converges in law to the solution of the $\Phi^4_2$ equation 
 \begin{align}
   \label{eq:phi_4_2}
   \begin{split}
   \partial_t X(t, x) &= \Delta X(t, x) - \frac{1}{3}X^3(t, x) + A X(t, x) + \sqrt{2}\xi(t, x)\\
-  X(0, \cdot) &= X_0\,    
+  X(0, \cdot) &= X^0\,    
   \end{split}
 \end{align}
-as long as the initial configurations of the discrete systems converge to $X_0$ in distribution, as we take $N$ to infinity.
+as $\gamma \to 0$, as long as the initial configurations $X_\gamma^0$ of the discrete system converges in law to $X^0$.
 
-We know, that the solution of this equation is distribution valued, and form the mild formulation of the equation it follows that $X_t \in \mathcal{C}^- \DefiningEquality \Union_{\nu > 0} \mathcal{C}^{-\nu}$, which makes the $X_t^3$ term in the equation ill-defined. In the solution theory of the $\Phi^4_2$ equation this is corrected by renormalizing the equation with a diverging linear term, formally written as 
+We know, that the solution of this equation is distribution valued, and from the mild formulation of the equation it follows that $X_t \in \mathcal{C}^- \DefiningEquality \Union_{\nu > 0} \mathcal{C}^{-\nu}$, which makes the $X^3(t, \Placeholder)$ term in the equation undefined. In the solution theory of the $\Phi^4_2$ equation this is corrected by renormalizing the equation with a diverging linear term, formally written as 
 \begin{align}
   \partial_t X(t, x) = \Delta X(t, x) - \frac{1}{3}\left(X^3(t, x) - 3 \infty \times X(t, x)\right) + A X(t, x) + \sqrt{2}\xi(t, x)\,.
 \end{align}
 We will see in the following, that the need for renormalization is not simply a mathematical artifact of the solution theory, but consistent with the physical interpretation, in the sense that the renormalization represents \say{a shift of the critical temperature away from its mean field value} \cite{mourrat2015convergencetwodimensionaldynamicisingkac}.
 
 \section{The Ising-Kac model}
-In order to precisely describe the interaction, we choose an arbitrary kernel $\mathfrak{K}: \RR^2 \to [0, 1]$ satisfying $\mathfrak{K} \in \mathcal{C}^2$, $\Support{\mathfrak{K}} \subset B^2(0, 3) \DefiningEquality \left\{x \in \RR^2 \colon \abs{x} < 3\right\}$, invariant under rotations and having furthermore $$\int_{\RR^2} \mathfrak{K}(x) dx = 1\,,\quad \int_{\RR^2} \mathfrak{K}(x) \abs{x}^2 dx = 4\,.$$
+In order to precisely describe the interaction, we choose an arbitrary kernel $\mathfrak{K}: \RR^2 \to [0, 1]$ satisfying $\mathfrak{K} \in \mathcal{C}^2(\RR^2)$, $\Support{\mathfrak{K}} \subset B^2(0, 3) \DefiningEquality \left\{x \in \RR^2 \colon \abs{x} < 3\right\}$, invariant under rotations and having furthermore $$\int_{\RR^2} \mathfrak{K}(x) dx = 1\,,\quad \int_{\RR^2} \mathfrak{K}(x) \abs{x}^2 dx = 4\,.$$
 
 
-For a scaling factor $0 < \gamma < \frac{1}{3}$ (on which $N = N(\gamma)$ will depend, as we see later), we discretizes the kernel as 
+For a scaling factor $0 < \gamma < \frac{1}{3}$ and $N = N(\gamma) \gg \gamma^{-1}$, we discretize the kernel as 
 $$\kappa_\gamma: \Lambda_N \to [0, 1]\,,\quad\kappa_\gamma(k) = \begin{cases}
   \frac{\mathfrak{K}(\gamma k)}{\sum_{l \in \Lambda_N} \mathfrak{K}(\gamma l)}&k \neq 0\\
   0 & k = 0
 \end{cases}\,,$$
-which acts as a mollifier on the grid to define the locally averaged field for any $\sigma \in \Sigma_N$ configuration through a discrete convolution as \begin{align}
+which acts as a mollifier on the grid to define the locally averaged field for any $\sigma \in \Sigma_N$ configuration by a discrete convolution
+\begin{align}
   h_\gamma(\sigma, k) \DefiningEquality (\Convolve{\kappa_\gamma}{\sigma})(k) \DefiningEquality  \sum_{l\in \Lambda_N} \kappa_\gamma(k-l) \sigma(l)\,,
 \end{align}
-where addition is always to be understood modulo $2N + 1$ on the grid: $k + l \DefiningEquality k + l + n(2N + 1) \in \left\{-N, \ldots, N\right\}$ for appropriate $n \in \ZZ$. \footnote{\textcolor{red}{$\gamma \gg N^{-1}$ to avoid self interactions}}
+where the addition operation is always understood modulo $2N + 1$ on the grid: $k + l \DefiningEquality k + l + n(2N + 1) \in \left\{-N, \ldots, N\right\}$ for appropriate $n \in \ZZ$. 
 
 The locally averaged field $h_\gamma$ describes the strength of the magnetic field for a spin at position $k$, and the total energy of the system is defined through the Hamiltonian \begin{align}
   \mathcal{H}_\gamma(\sigma) \DefiningEquality -\frac{1}{2}\sum_{k\in \Lambda_N} \sigma(k) h_\gamma(k)\,.
@@ -273,32 +264,29 @@ The locally averaged field $h_\gamma$ describes the strength of the magnetic fie
   \lambda_\gamma(\sigma) = \frac{1}{\mathcal{Z}_\gamma}\exp{\left(-\beta \mathcal{H}_\gamma(\sigma)\right)}\,,\quad \mathcal{Z}_\gamma = \sum_{\sigma \in \Sigma_N} \exp{\left(-\beta \mathcal{H}_\gamma(\sigma)\right)}\,.
 \end{align}
 
-To describe the evolution of the process we define a Markov process on $\Sigma_N$ with the defined by the generator \begin{align}
+To describe the evolution of the process we define a Markov process on $\Sigma_N$ given by its infinitesimal generator \begin{align}
   \mathcal{L}_\gamma(f)(k) = \sum_{l \in \Lambda_N} c_\gamma(\sigma, l)(f(\sigma^j) - f(\sigma))
 \end{align}
-for functions $f: \Lambda_N \to \RR$, where we let $\sigma^j \in \Sigma_N$ denote the configuration identical to $\sigma$, except for the spin at position $j$, which we flipped. For the jump rates $c_\gamma(\sigma, l)$, we choose the those of the Glauber dynamics, which can be simplified as
+for any function $f: \Lambda_N \to \RR$, where by $\sigma^j \in \Sigma_N$ we denote a configuration identical to $\sigma$, except for the spin at position $j$, which is flipped. For the jump rates $c_\gamma(\sigma, l)$, we choose the those of the Glauber dynamics, which are defined and can be simplified as
 \begin{align}
   \label{eq:trig_jump_rates}
   c_\gamma(\sigma, l) = \frac{\lambda(\sigma^l)}{\lambda(\sigma) + \lambda(\sigma^l)} = \frac{e^{-\sigma(j)\beta h_\gamma(\sigma, j)}}{e^{\beta h_\gamma(\sigma, j)} + e^{-\beta h_\gamma(\sigma, j)}} = \frac{1}{2}\left(1 - \sigma(j) \tanh\left(\beta h_\gamma(\sigma, j)\right)\right)\,,
 \end{align}
-where the second equality follows from \begin{align}
-  \TODO{explain}\,,
-\end{align}
-and the second equality follows from
-\begin{align}
-  \TODO{trig identity}\,.
-\end{align}
-For the Markov process generated by the semigroup we write $(\sigma(t))_{t \ge 0}$, and for the corresponding process generated by the observable $h_\gamma(\cdot, \cdot)$ we write $(h_\gamma(t, k))_{t \ge 0} \DefiningEquality h_\gamma(\sigma(t), k)$ for each $k \in \Lambda_N$, for which we can write the evolution equation
+where we used that $h_\gamma(\sigma, j)$ does not depend on $\sigma(j)$ and $\sigma(j) \in \left\{-1, 1\right\}$.
+
+For the Markov process generated by the semigroup we write $(\sigma(t))_{t \ge 0}$, and for the corresponding process generated by the observable $h_\gamma(\cdot, k)$ we write $(h_\gamma(t, k))_{t \ge 0} \DefiningEquality h_\gamma(\sigma(t), k)$ for each $k \in \Lambda_N$, for which we can write the evolution equation
 \begin{align}
   \label{eq:microscopic_evolution_equation}
-  h_\gamma(t, k) = h_\gamma(0, k) + \int_{0}^{t} \mathcal{L}_\gamma h(s, k) \,ds + m_\gamma(t, k)\,
+  h_\gamma(t, k) = h_\gamma(0, k) + \int_{0}^{t} \mathcal{L}_\gamma h(s, k) \,ds + m_\gamma(t, k)\,,
 \end{align}
-where $(m(t, k))_{t\ge 0}$ is a martingale for each $k\in \Lambda_N$\cite[Appendix B]{mourrat2015convergencetwodimensionaldynamicisingkac}, since the $\sigma(\cdot, k)$ process is a Feller process \cite[Section 6.5.1]{gall2016brownian}. Using the trigonometric representation of the jump rates \eqref{eq:microscopic_evolution_equation}, the Taylor expansion $\tanh(h) = h - \frac{h^3}{3} + \smallO{h^6}$ and the fact, that $h_\gamma(\sigma^j, k) - h_\gamma(\sigma, k) = -2 \kappa_\gamma(k-j) \sigma(j)$ we obtain 
-\begin{align}
-  \mathcal{L}_\gamma h_\gamma(\sigma, k) &= \left(\Convolve{\kappa_\gamma}{h_\gamma(\sigma, k)} - h_\gamma(\sigma, k)\right) + (\beta - 1) \Convolve{\kappa_\gamma}{h_\gamma(\sigma, k)} - \frac{\beta^3}{3}\left(\Convolve{\kappa_\gamma}{h_\gamma^3(\sigma, k)}\right) + \operatorname{err}\\
+where $(m(t, k))_{t\ge 0}$ is a martingale for each $k\in \Lambda_N$\cite[Appendix B]{mourrat2015convergencetwodimensionaldynamicisingkac}, since the $\sigma(\cdot, k)$ process is a Feller process \cite[Section 6.5.1]{gall2016brownian}. Using the trigonometric representation of the jump rates \eqref{eq:microscopic_evolution_equation}, the Taylor expansion $\tanh(h) = h - \frac{h^3}{3} + o(h^6)$ and the fact, that $h_\gamma(\sigma^j, k) - h_\gamma(\sigma, k) = -2 \kappa_\gamma(k-j) \sigma(j)$ we obtain 
+\begin{align*}
+  \begin{split}
+    \mathcal{L}_\gamma h_\gamma(\sigma, k) &= \left(\Convolve{\kappa_\gamma}{h_\gamma(\sigma, k)} - h_\gamma(\sigma, k)\right) + (\beta - 1) \Convolve{\kappa_\gamma}{h_\gamma(\sigma, k)} - \frac{\beta^3}{3}\left(\Convolve{\kappa_\gamma}{h_\gamma^3(\sigma, k)}\right) + \operatorname{err}\\
   &\DefiningEqualityRev \bar{\Delta}_\gamma h_\gamma(\sigma, k) + (\beta - 1) \Convolve{\kappa_\gamma}{h_\gamma(\sigma, k)} - \frac{\beta^3}{3}\left(\Convolve{\kappa_\gamma}{h_\gamma^3(\sigma, k)}\right) + \operatorname{err}\,.
-\end{align}
-We use the evolution equation \eqref{eq:microscopic_evolution_equation} to derive an SPDE after suitable rescaling on $\TT^2$, identified with $[0, 1]^2$. For this purpose we choose $\gamma \in (0, 1)$, $N = N(\gamma)$ to be defined later, $\epsilon = \frac{2}{2N + 1}$ and $\alpha, \delta > 0$ scaling factors, and we assign to every $k \in \Lambda_N$ the macroscopic coordinates by scaling $$k = (k_1, k_2) \mapsto \epsilon k =(\epsilon k_1, \epsilon k_2) \in \TT^2\,.$$ Let us in particular denote $\Lambda_\epsilon = \epsilon \Lambda_N$, and for these points we consider the rescaled field
+  \end{split}
+\end{align*}
+We use the evolution equation \eqref{eq:microscopic_evolution_equation} to derive an SPDE after suitable rescaling on $\TT^2$ (which we identify with $[0, 1]^2$). For this purpose we choose $\gamma \in (0, 1)$, $N = N(\gamma)$ (to be defined later), $\epsilon = \frac{2}{2N + 1}$ and $\alpha, \delta > 0$ scaling factors, and we assign to every $k \in \Lambda_N$ the macroscopic coordinates by scaling $$k = (k_1, k_2) \mapsto \epsilon k =(\epsilon k_1, \epsilon k_2) \in \TT^2\,.$$ Let us in particular denote $\Lambda_\epsilon = \epsilon \Lambda_N$, and for these points we consider the rescaled field
 \begin{align}
   X_\gamma(t, x) = \frac{1}{\delta}h_\gamma\left(\frac{t}{\alpha}, \frac{x}{\epsilon}\right)~(x\in \Lambda_\epsilon, t \ge 0)\,.
 \end{align}
@@ -318,34 +306,29 @@ where $K_\gamma(x) = \epsilon^{-2} \kappa_\gamma(\epsilon^{-1}x) = c_\gamma \fra
 To fix the above appearing scaling factors as a function of the Kac scaling parameter $\gamma$, we have to observe the following constraints 
 \begin{itemize}
   \item $N = \floor{\lambda^{-2}}$,
-  \item  $\epsilon = \frac{2}{2N + 1}$ is by definition the distance between adjacent particles in macroscopic coordinates,
-  \item the coefficients $\frac{\epsilon^2}{\gamma^2 \alpha}$ and $\frac{\delta^2}{\alpha}$ should converge to $1$ as $\gamma \to 0^+$, for the convergence of the corresponding terms in \eqref{eq:evolution_in_macroscopic_coordintes} to something non-trivial,
+  \item  $\epsilon = \frac{2}{2N + 1}$ (which is by definition the distance between adjacent particles in macroscopic coordinates),
+  \item $1 \approx \frac{\epsilon^2}{\gamma^2 \alpha} \approx \frac{\delta^2}{\alpha}$ (so that the corresponding terms in \eqref{eq:evolution_in_macroscopic_coordintes} converge to something non-trivial as $\gamma \to 0^+$),
 \end{itemize}
-which results in $\alpha = \gamma^2, \delta=\gamma$. In partcular, the leading order term in the expansion of the error \eqref{eq:error_term} scales as $\frac{(\beta \delta)^5}{\delta\alpha} = \beta^5 \gamma^2$, which we would expect to converge to $0$ for an appropriate choice of $\beta$, whose value was not yet set. Based on \eqref{eq:evolution_in_macroscopic_coordintes} a reasonable choice could be $\frac{\beta - 1}{\alpha} \approx 1$, which turns out to be not the right one. The authors refer to \cite{cassandro1997upper}, in which it was already observed that at least in the stationary case a shift from the 
-
-
-\TODO{finish this phrase, conclude from (2.18) that it's a logarithmically divergent term}.
-
-\TODO{state the evolution equation with all the terms replaced, also redefined the $\Delta$ operator}
-
-\begin{itemize}
-  % \item we rescale time, space and amplitude by factors $\alpha$, $\epsilon$ and $\delta$, respectively, and by considering the evolution equation after the coordinate change we obtain the right factors so that the leading terms have coefficient 1 in the rescaled equation.
-  \item this gives a guess for the inverse temperature, but the trivial guess (O(1)) is incorrect as already observed in [10]
-  \begin{itemize}
-    \item in the same paper they say \say{The origin of the Wick regularization in the limit theory is then explained in terms of the critical temperature shift found in Theorem 1.1, which is in fact recognized as the microscopic origin of the Wick regularization.}
-    \item instead we choose something that such that the term $\frac{\beta -1}{\alpha} = \mathfrak{c}_\gamma +A$ where $A$ is fixed and $\mathfrak{c}_\gamma = \Theta(\log{\gamma^{-1}})$. "The extra term $\mathfrak{c}_\gamma$ reflects the fact that the limiting equation has to be renormalized" (p7)
-  \end{itemize}
-\end{itemize}
-
-
-$X_\gamma(t, \cdot)$ was so far defined only for the points $x \in \Lambda_\epsilon$, thus if we wanted to talk about it's convergence to $X$, we have to first extend it to the whole $\TT^2$. For the sake of convenience we do it with the help of trigonometric polynomials, since they play well with the tools of Fourier analysis, but the choice is essentially irrelevant \cite{mourrat2015convergencetwodimensionaldynamicisingkac}. Thus for any $Y: \Lambda_\epsilon \to \RR$ we define the discrete Fourier transform $\hat{Y}$ as \begin{align}
+which results in $\alpha = \gamma^2, \delta=\gamma$. In partcular, the leading order term in the expansion of the error \eqref{eq:error_term} scales as $\frac{(\beta \delta)^5}{\delta\alpha} = \beta^5 \gamma^2$, which we would expect to converge to $0$ for an appropriate choice of $\beta$, whose value is not yet determined. Based on \eqref{eq:evolution_in_macroscopic_coordintes} a seemingly reasonable choice could be $\frac{\beta - 1}{\alpha} \approx 1$, which turns out to be not the right one. We instead assume $(\beta - 1) = \alpha(\mathfrak{c}_\gamma + A)$ for some $A \in \RR$ fixed and we set \begin{align}
+  \label{eq:mathfrak}
+  \mathfrak{c}_\gamma = \frac{1}{4}\sum_{\substack{k \in \left\{-N, \ldots, N\right\}^2\\k\neq 0}}\frac{\abs{\hat{K}_\gamma(k)}^2}{\gamma^{-2} (1 - \hat{K}_\gamma(k))}\,.
+\end{align}
+We will furthermore write $\Delta_\gamma = \frac{\epsilon^2}{\gamma^2}\frac{1}{\alpha}\tilde{\Delta}_\gamma$. With these parameters set, the evolution equation reads as
+\begin{align}
+  \label{eq:evolution_in_macroscopic_coordintes_fixed}
+  \begin{split}
+      X_\gamma(t, x) =& X_\gamma(0, x) + \int_{0}^{t} \biggl({\Delta}_\gamma X_\gamma(s, x) + (\mathfrak{c}_\gamma + A) \Convolve[\epsilon]{K_\gamma}{X_\gamma(s, x)}\\
+    &-\frac{\beta^3}{3} \Convolve[\epsilon]{K_\gamma}{X_\gamma^3(s, x)} + \Convolve[\epsilon]{K_\gamma}{E_\gamma(s, x)}\biggr)\,ds + M_\gamma(t, x)\,.
+  \end{split}
+\end{align}
+$X_\gamma(t, \cdot)$ was so far defined only for the points $x \in \Lambda_\epsilon$, thus if we wanted to talk about its convergence to $X$, we have to first extend it to the whole $\TT^2$. For the sake of convenience we do it with the help of trigonometric polynomials, since they play well with the tools of Fourier analysis, but the choice is essentially irrelevant \cite{mourrat2015convergencetwodimensionaldynamicisingkac}. Thus for any $Y: \Lambda_\epsilon \to \RR$ we define the discrete Fourier transform $\hat{Y}$ as \begin{align}
   \hat{Y}(k) = \begin{cases}
       \sum_{x \in \Lambda_\epsilon} \epsilon^2 e^{- i \pi k \cdot x} Y(x)&k \in \left\{-N, \ldots, N\right\}^2\\
       0&\text{otherwise}
   \end{cases}\,,
 \end{align}
 form which we get by inverse Fourier transformation $$\Ext Y(x) \DefiningEquality \frac{1}{4} \sum_{k \in \ZZ^2} \hat{Y}(k) e^{i \pi k \cdot x} = \frac{1}{4} \sum_{k \in \left\{-N, \dots, N\right\}^2} \sum_{y \in \Lambda_\epsilon}\epsilon^2 e^{i \pi k \cdot (x -y)} Y(y)\,.$$
-The extension $\Ext Y$ is smooth, real valued, and it is the unique trigonometric polynomial of degree $N$ coinciding with $Y$ on $\Lambda_\epsilon$. If there is no confusion, we simply write $Y$ for the continuous extension as well, instead of $\Ext{Y}$, and with one notable exception mentioned later, we always use the $\Ext$ operator to continuously extend $\Lambda_\epsilon \to \RR$ functions to $\TT^2 \to \RR$. The extension works identically for functions of a grid of a higher dimensional torus, and in practice the following lemma allows us to conclude error bounds between continuous extensions of functions defined based on their error on the grid points:
+The extension $\Ext Y$ is smooth, real valued, and it is the unique trigonometric polynomial of degree $N$ coinciding with $Y$ on $\Lambda_\epsilon$. If there is no confusion, we simply write $Y$ for the continuous extension instead of $\Ext{Y}$, and with one notable exception mentioned later, we always use the $\Ext$ operator to continuously extend $\Lambda_\epsilon \to \RR$ functions to $\TT^2 \to \RR$. The extension works identically for functions on a grid of a higher dimensional torus, and the following lemma let us bound the extension uniformly on $\TT^n$ by a uniform bound on $\Lambda_\epsilon$:
 
 \begin{lemma}[{\cite[Lemma A.6]{mourrat2015convergencetwodimensionaldynamicisingkac}}]
   \label{lemma:A6}
@@ -357,34 +340,31 @@ The extension $\Ext Y$ is smooth, real valued, and it is the unique trigonometri
     \norm{\Ext{Z}}_{L^\infty(\TT^n)} \le C \epsilon^{-\kappa} \norm{Z}_{L^\infty(\Lambda_\epsilon)}\,.
   \end{align*}
 \end{lemma}
-% \TODO{mention lemma a.something about the extension estimate}
-% \TODO{mention that unless otherwise stated, we mean extension by $\Ext$}
-\section{Main result}
-  \begin{itemize}
-    \item $\mathcal{D}(\mathbb{R}_+, \mathcal{S})$: $\mathcal{S}$ metric space-valued càdlàg functions on $\mathbb{R}_+$ endowed with the Skorokhod topology
-    \item $\mathcal{C}^{-\nu}~(\nu > 0)$ Besov space, with the def Perkowski used!
-  \end{itemize}
+We can now state the main result of the paper
 
 \begin{theorem}
-  Assume that the scaling assumptions hold \TODO{which scaling assumptions?}, where the precise value of $\mathfrak{c}_\gamma$ is given by\begin{align}
-    \mathfrak{c}_\gamma = \frac{1}{4}\sum_{\substack{k \in \left\{-N, \ldots, N\right\}^2\\k\neq 0}}\frac{\abs{\hat{K}_\gamma(k)}^2}{\gamma^{-2} (1 - \hat{K}_\gamma(k))}\,.
-  \end{align}
-  Assume also, that $X^0_\gamma$ converges to $X^0$ in $\mathcal{C}^{-\nu}$ for $\nu > 0$ small enough and that $X^0, x^0_\gamma$ are uniformly bounded in $\mathcal{C}^{-\nu + \kappa}$ for an arbitrarily small $\kappa > 0$. Then $X_\gamma$ converges in law to $X$ with respect to the topology of $\mathcal{D}(\RR_+, \mathcal{C}^{-\nu})$.
+  Assume that the scaling assumptions hold, and the evolution equation of the Ising-Kac model reads as in \eqref{eq:evolution_in_macroscopic_coordintes_fixed}, with the precise value of $\mathfrak{c}_\gamma$ given by \eqref{eq:mathfrak}. Assume also, that $X^0_\gamma$ converges to $X^0$ in $\mathcal{C}^{-\nu}$ for $\nu > 0$ small enough and that $X^0, x^0_\gamma$ are uniformly bounded in $\mathcal{C}^{-\nu + \kappa}$ for an arbitrarily small $\kappa > 0$. Then $X_\gamma$ converges in law to $X$ with respect to $\mathcal{D}(\RR_+, \mathcal{C}^{-\nu})$, the space of $\mathcal{C}^{-\nu}$-valued càdlàg functions on $\RR_+$ endowed with the Skorokhod topology.
 \end{theorem}
-\TODO{rough sketch of the proof idea}
+% \section{Main result}
+% Consider 
+%   \begin{itemize}
+%     \item $\mathcal{D}(\mathbb{R}_+, \mathcal{S})$: $\mathcal{S}$ metric space-valued càdlàg functions on $\mathbb{R}_+$ endowed with the Skorokhod topology
+%     \item $\mathcal{C}^{-\nu}~(\nu > 0)$ Besov space, with the def Perkowski used!
+%   \end{itemize}
+
 \chapter{Solution theory of $\Phi^4_2$}
 \label{chapter:solution_theory_of_phi_4_2}
 If we considered the mild formulation 
 \begin{align}
   X_t = P_t X_0 + \int_{0}^{t}P_{t-s}\left(-\frac{1}{3}X^3(s) + A X(s)\right)\,ds + \int_0^t P_{t-s} \xi(s) \,ds
 \end{align}
-of the $\Phi^4_2$ equation, then from the $0^-$ regularity of the stochastic convolution $Z(t) = \int_0^t P_{t-s} \xi(s) \,ds$ we cannot expect the solution $X_t$ to have a better regularity then $Z_t$ itself, making the $X^3_s$ distributional product undefined. One could try working around the issue by spatially localizing the stochastic convolution and to take $\epsilon \to 0$ in $Z_\epsilon(t) = \mathcal{F}_{\TT^2}^{-1}(\phi_\epsilon \mathcal{F}_{\TT^2}(t, \Placeholder))$ where $\phi_\epsilon = \CharFunction{B(0, \epsilon^{-1})}$, for example. It has been shown in \cite{hairer2012triviality}, that under such an approximation the solution $X_\epsilon$ converges to the constant $0$ distribution.
+of the $\Phi^4_2$ equation, then from the $0^-$ regularity of the stochastic convolution $Z(t) = \int_0^t P_{t-s} \xi(s) \,ds$ we cannot expect the solution $X_t$ to have a better regularity than $Z_t$ itself, making the $X^3_s$ distributional product undefined. One could try working around the issue by spatially localizing the stochastic convolution and to take $\epsilon \to 0$ in $Z_\epsilon(t) = \mathcal{F}_{\TT^2}^{-1}(\phi_\epsilon \mathcal{F}_{\TT^2}(t, \Placeholder))$ where $\phi_\epsilon = \CharFunction{B(0, \epsilon^{-1})}$, for example. It has been shown in \cite{hairer2012triviality}, that under such an approximation the solution $X_\epsilon$ converges to the constant $0$ distribution.
 
-In order to make sense of the equation one has to introduce a shift in
+In order to avoid a non-trivial limit of $X_\epsilon$ as $\epsilon \to 0$, one has to introduce a shift of $$\mathfrak{c}_\epsilon = \sum_{0 < \abs{k} < \epsilon^{-1}} \frac{1}{4 \pi^2 \abs{k}^2}$$ in
 \begin{align}
-  X_\epsilon(t) = P_t X_0 + \int_{0}^{t}P_{t-s}\left(-\frac{1}{3}\left(X^3_\epsilon(s) - \mathfrak{c}_\epsilon X_\epsilon\right)+ A X(s)\right)\,ds + \int_0^t P_{t-s} \xi(s) \,ds
+  X_\epsilon(t) = P_t X_0 + \int_{0}^{t}P_{t-s}\left(-\frac{1}{3}\left(X^3_\epsilon(s) - \mathfrak{c}_\epsilon X_\epsilon\right)+ A X(s)\right)\,ds + \int_0^t P_{t-s} \xi(s) \,ds\,.
 \end{align}
-with $\mathfrak{c}_\epsilon = \sum_{0 < \abs{k} < \epsilon^{-1}} \frac{1}{4 \pi^2 \abs{k}^2}$ in order to reach a non-trivial limit when we take $X_\epsilon$ to the limit. To make this precise, we decompose first $X_t$ as $X_t = Z_t + v_t$, and notice that $v_t$ now solves the 
+To make this precise, we decompose first $X_t$ as $X_t = Z_t + v_t$, and notice that $v_t$ now solves the 
 \begin{align}
   \label{eq:phi_eq_in_v}
   \begin{split}
@@ -392,9 +372,9 @@ with $\mathfrak{c}_\epsilon = \sum_{0 < \abs{k} < \epsilon^{-1}} \frac{1}{4 \pi^
     v_0 &= X^0
   \end{split}
 \end{align}
-equation. If we assume for the initial datum $X^0 \in \mathcal{C}^\alpha~(\alpha \in (1, 2))$, and if we considered now $(Z, Z^1, Z^2)$ as arbitrary processes (ie, the superscripts denoting indices, and not exponentiation) with $Z^i \in {C}(\RR_+, \mathcal{C}^{\alpha-2})$, then we get from setting up a Picard iteration that there exists a random time $T^\star$ depending on $(Z, Z^2, Z^3)$ and a unique solution $v$ depending continuously on $(X^0, Z, Z^1, Z^2)$ \cite[Theorem 4.10.]{perkowski2024stochaIV}.
+equation. If we assume for the initial datum $X^0 \in \mathcal{C}^\alpha~(\alpha \in (1, 2))$, and if we considered now $(Z, Z^1, Z^2)$ as arbitrary processes (ie, the superscripts denoting indices, and not exponentiation) with $Z^i \in {C}(\RR_+, \mathcal{C}^{\alpha-2})$, then we get from setting up a Picard iteration, that there exists a random time $T^\star$ depending on $(Z, Z^2, Z^3)$ and a unique solution $v$ depending continuously on $(X^0, Z, Z^1, Z^2)$ \cite[Theorem 4.10.]{perkowski2024stochaIV}.
 
-Since $Z_\epsilon$ is a smooth function, we can actually construct its powers and apply the above result, then take the $\epsilon \to 0$ limit in the hope of obtaining a solution $v$. Unfortunately $Z_\epsilon^2$ diverges as $\epsilon \to 0$. To correct this, one replaces the $n^\text{th}$ power with the $n^\text{th}$ Hermite polynomial as
+Since $Z_\epsilon$ is a smooth function, we can actually construct its powers and apply the above result, then take the $\epsilon \to 0$ limit in the hope of obtaining a solution $v$. Unfortunately $Z_\epsilon^2$ diverges as $\epsilon \to 0$, thus we cannot exploit the continuity of the solution operator from above. To fix this, one replaces the $n^\text{th}$ power with the $n^\text{th}$ Hermite polynomial as
 \begin{align}
   Z_\epsilon^{:n:}(t, x) \DefiningEquality H_n(Z_\epsilon(t, x), \mathfrak{c}_\epsilon(t))\,
 \end{align}
@@ -509,7 +489,7 @@ Similarly to the case of the $\Phi^4_2$ equation, we define iterated integrals a
 \end{align*}
 and moreover $Z^{:n:}_\gamma(t, x) := R^{:n:}_{\gamma, t}(t, x)$\footnote{For $n \ge 2$  we do not use the $\Ext$ operator for the continuous extension of $R^{:n:}_{\gamma, t}(t, \cdot)$ to a $\TT^2 \to \RR$ function, but we take the inverse Fourier transform of $\hat{R}^{:n:}_{\gamma, t}(t, \cdot) \DefiningEquality n \int_{r = 0}^s \hat{R}^{:n-1:}_{\gamma, t}(r^-, x)\,d\hat{R}_{\gamma, t}(r, x)$, since according to the authors, \say{products are not well captured by} extending by $\Ext$.}. In this section the goal is to obtain uniform bounds in Besov norms on the terms $R^{:n:}_{\gamma, t}$ and $Z^{:n:}_\gamma$, which we later use to prove the convergence of $Z^{:n:}_\gamma$ to a Hermite polynomial and the tightness of a family of distributions.
 
-Contrary to the $\Phi^4_2$ case, we are not integrating against a Gaussian noise anymore, and furthermore $R^{:n:}_{\gamma, t}(\cdot, x)$ is discontinuous. Thus, instead of exploiting the Gaussian hypercontractivity, the authors introduce a general bound in \cite[Lemma 4.1.]{mourrat2015convergencetwodimensionaldynamicisingkac} for iterated integrals against the $(M_\gamma(\cdot, x))_{t \ge 0}$ martingales to control the higher moments, which will in particular be used on $R^{:n:}_{\gamma, t}$ and $Z^{:n:}_\gamma$. They use a version of BDG, after controlling the errors caused by the discontinuities in the jump process, which leads to
+Contrary to the $\Phi^4_2$ case, we are not integrating against a Gaussian noise anymore, and furthermore $R^{:n:}_{\gamma, t}(\cdot, x)$ is discontinuous. Thus, instead of exploiting the Gaussian hypercontractivity, the authors introduce a general bound in \cite[Lemma 4.1.]{mourrat2015convergencetwodimensionaldynamicisingkac} for iterated integrals against the $(M_\gamma(\cdot, x))_{t \ge 0}$ martingales to control the higher moments, which will in particular be used in order to obtain bounds on $R^{:n:}_{\gamma, t}$ and $Z^{:n:}_\gamma$. To work around the above mentioned issues, they use a version of BDG, after controlling the errors caused by the discontinuities in the jump process, which leads to
 \begin{proposition}[{\cite[Proposition 4.2.]{mourrat2015convergencetwodimensionaldynamicisingkac}}]
   \label{prop:bounds_proposition_4.2}
   There exists a constant $\gamma_0 > 0$ such that the following holds. For every $n \in \NN$, $p \ge 1$, $\nu > 0$, $T > 0$, $0\le \lambda \le \frac{1}{2}$ and $0 < \kappa \le 1$, there exists a constant $C = C(n, p, \nu, T, \lambda, \kappa)$ such that for every $0 \le s \le t \le T$ and $0 < \gamma < \gamma_0$,
@@ -525,26 +505,21 @@ As remarked in \cite[Remark 4.3.]{mourrat2015convergencetwodimensionaldynamicisi
     \Exp{\norm{Z^{:n:}_{\gamma}(t, \Placeholder) - Z^{:n:}_{\gamma}(s, \Placeholder)}^p_{\mathcal{C}^{-\nu-2\lambda}}} &\le C \abs{t -s}^{\lambda p} + C \gamma^{p(1-\kappa)}\,,\\
     \Exp{\norm{Z^{:n:}_{\gamma}(r, \Placeholder) - R^{:n:}_{\gamma, t}(s, \Placeholder)}^p_{\mathcal{C}^{-\nu-2\lambda}}} &\le C \abs{t -s}^{\lambda p} + C \gamma^{p(1-\kappa)}\,,
 \end{align*}
-bounds, which are going to be used later to prove the tightness of the $\left\{Z^{:n:}_\gamma, \gamma \in (0, \frac{1}{3})\right\}$ family, and the joint convergence of $(Z^{:1:}_\gamma, \ldots, Z^{:n:}_\gamma)$ after a localization to $(Z^{:1:}, \ldots, Z^{:n:})$ in law with respect to the topology of $\mathcal{D}(\RR_+, \mathcal{C}^{-\nu})^n$.
+bounds, which are going to be used later to prove the tightness of the $\left\{Z^{:n:}_\gamma, \gamma \in (0, \frac{1}{3})\right\}$ family, and the joint convergence of $(Z^{:1:}_{\gamma, \mathfrak{m}}, \ldots, Z^{:n:}_{\gamma, \mathfrak{m}})$ to $(Z^{:1:}, \ldots, Z^{:n:})$ in law with respect to the topology of $\mathcal{D}(\RR_+, \mathcal{C}^{-\nu})^n$, where $Z^{:n:}_{\gamma, \mathfrak{m}}$ will be defined later as a process identical to $Z^{:n:}_{\gamma}$ up to a certain stopping time, and then extended differently.
 
-Similarly to the case of $\Phi^4_2$, 
-\TODO{maybe mention Lemma 4.6, but probably not:}
-\begin{itemize}
-    \item Lemma 4.6 seems to be interesting and important: it reflects the fact that Proposition 4.2 is a bit too rough as an estimate, and we can give a much better estimate on the high frequencies of $Z_\gamma$ defined as $Z_\gamma^{\text{high}}(t, x)$:
-\end{itemize}
 \chapter{Tightness for the linearized system}
-In a topological space we call a set $A$ relatively compact, if its closure $\Closure{A}$ is compact. From Prohorov's Theorem \cite[Theorem 5.1. and Theorem 5.2.]{billingsley2013convergence} a family of measures on a Polish space is relatively compact with respect to weak convergence if and only if it is tight. In particular, since we work with a non-standard definition of the Besov space $\mathcal{C}^{-\nu}$, namely as the closure of $C^\infty\left(\TT^2\right)$ under the norm $\norm{\Placeholder}_{\mathcal{C}^{-\nu}}$, we have that $\mathcal{C}^{-\nu}$ is a Polish space \cite[p70]{mourrat2015convergencetwodimensionaldynamicisingkac}. This implies that the Skorokhod space $\mathcal{D}(\RR_+, \mathcal{C}^{-\nu})$ is also a Polish space \cite[Theorem 12.2.]{billingsley2013convergence}. In particular, if the laws of $\mathcal{Z} = \left\{Z^{:n:}_\gamma, \gamma \in (0, \frac{1}{3})\right\}$ are tight, then $Z^{:n:}_\gamma \DConv Z^{:n:}$ as $\gamma \to 0$ if and only if for every sequence $(\gamma_n)_{n \in \NN}$ with $\gamma_n \to 0^+$ the subsequential limits $Z^{:n:}_{\gamma_n}$ exists and coincide.
+In a topological space we call a set $A$ relatively compact, if its closure $\Closure{A}$ is compact. From Prohorov's Theorem \cite[Theorem 5.1. and Theorem 5.2.]{billingsley2013convergence} a family of measures on a Polish space is relatively compact with respect to weak convergence if and only if it is tight. In particular, since we work with a non-standard definition of the Besov space $\mathcal{C}^{-\nu}$, namely as the closure of $C^\infty\left(\TT^2\right)$ under the norm $\norm{\Placeholder}_{\mathcal{C}^{-\nu}}$, we have that $\mathcal{C}^{-\nu}$ is a Polish space \cite[p70]{mourrat2015convergencetwodimensionaldynamicisingkac}. This implies that the Skorokhod space $\mathcal{D}(\RR_+, \mathcal{C}^{-\nu})$ is also a Polish space \cite[Theorem 12.2.]{billingsley2013convergence}. In particular, if the laws of $\mathcal{Z} = \left\{Z^{:n:}_\gamma, \gamma \in (0, \frac{1}{3})\right\}$ are tight, then $Z^{:n:}_\gamma \DConv Z^{:n:}$ as $\gamma \to 0$ if and only if for every sequence $(\gamma_n)_{n \in \NN}$ with $\gamma_n \to 0^+$ the subsequential limits $Z^{:n:}_{\gamma_n}$ exists and equal to $Z^{:n:}$.
 
-Similarly to the case of the $\Phi^4_2$ equation, $Z^{:n:}_\gamma$ can be (approximately) written as a Hermite polynomial. The $\gamma_0$ constant in the following proposition is from \cite[Lemma 8.2]{mourrat2015convergencetwodimensionaldynamicisingkac} regarding uniform bounds on the Fourier coefficients of $K_\gamma$ and its derivatives.
+Similarly to the case of the $\Phi^4_2$ equation, $Z^{:n:}_\gamma$ can be (approximately) written as a Hermite polynomial. The $\gamma_0$ constant in the following proposition is from \cite[Lemma 8.2]{mourrat2015convergencetwodimensionaldynamicisingkac} regarding bounds on the Fourier coefficients of $K_\gamma$ and its derivatives, which are uniform in $\gamma < \gamma_0$.
 
 \begin{proposition}[{\cite[Proposition 5.3]{mourrat2015convergencetwodimensionaldynamicisingkac}}]
-  For the above $\gamma_0$ and for any $n\in\NN$, $\kappa >0$ and $1 \le p < \infty$, there exists $C = C(nm, p, t, \kappa) > 0$ such that for every $0 < \gamma < \gamma_0$\,
+  For the above $\gamma_0$ and for any $n\in\NN$, $\kappa >0$ and $1 \le p < \infty$, there exists $C = C(n, p, t, \kappa) > 0$ such that for every $0 < \gamma < \gamma_0$\,
   \begin{align*}
     \left(\Exp{\sup_{x \in \TT^2} \sup_{0 \le s \le t} \abs{E^{:n:}_{\gamma, t}(s, x)}^p}\right)^{1/p} \le C \gamma^{1 - \kappa}\,
   \end{align*}
   where $E^{:n:}_{\gamma, t}(s, x) = H_n(R_{\gamma, t}(s, x), \Bracket{R_{\gamma, t}(\Placeholder, x)}_s) - R^{:n:}_{\gamma, t}(s, x)$ and $\Bracket{M}_t$ is the bracket process defind for any square-integrable càdlàg martingale as $\Bracket{M}_t = M^2(t) - 2 \int_{0}^{t}M^{s^{-}} dM(s)$.
 \end{proposition}
-This approximate representation of $Z_\gamma^{:n:}$ as Hermite polynomials allows us to show tightness of the 
+This approximate representation of $Z_\gamma^{:n:}$ as Hermite polynomials used in 
 % \begin{itemize}
 %   \item Discussion of the terms $Z_\gamma^{:n:}$ and $R_{\gamma, t}^{:n:}$ is continued. After having obtained bounds on the goodness of the approximation in Prop 4.2, we give additional bounds related to the [[predictable quadratic variation]]s (for $M$ [[càdlàg]] $L^2$ martingale it's the unique $\langle M \rangle$ making $M^2 -  \langle M \rangle$ into a martingale) and the [[bracket process]] $[M]_t = M^2_t - 2\int_0^t M(s^-)dM(s)$, namely
 %   \begin{itemize}
@@ -591,11 +566,11 @@ This approximate representation of $Z_\gamma^{:n:}$ as Hermite polynomials allow
   \begin{align*}
     \Exp{\sup_{0 \le t \le T} \sup_{x \in \TT^2} \abs{ \hat{Z}^{:n:}_\gamma(t, x) - Z^{:n:}_\gamma(t, x)}^p} \le C(n, p, T, \kappa) \gamma^{(1 - \kappa) p}
   \end{align*}
-  bound which lets us transfer the results obtained for the family $\hat{\mathcal{Z}}$ to $\mathcal{Z}$. 
+  bound which lets us transfer the results obtained for the family $\hat{\mathcal{Z}}$ to $\mathcal{Z}$.
 \end{proof}
 
 \chapter{Convergence in law of the linearised system}
-After showing tightness of $\mathcal{Z} = \left\{Z^{:n:}_\gamma, \gamma\in(0, 1/3)\right\}$ it still remains to show the convergence of $Z^{:n:}_\gamma$ as $\gamma \to 0$. In this section we show a partial result, namely the convergence of $Z^{:n:}_{\gamma, \mathfrak{m}}$ to $Z$ (the stochastic convolution in the $\Phi^4_2$ equation). This $Z^{:n:}_{\gamma, \mathfrak{m}}$ is identical to $Z^{:n:}_{\gamma}$ up until a random time $\tau_{\gamma, \mathfrak{m}}$, beyond which we extend it by modifying first the dynamics of $(\sigma(t, \cdot))_{t \ge 0}$, and equating $^{:n:}_{\gamma, \mathfrak{m}}$ to the stochastic convolution from mild formulation of the evolution equation of this new Markov chain.
+After showing tightness of $\mathcal{Z} = \left\{Z^{:n:}_\gamma, \gamma\in(0, 1/3)\right\}$ it still remains to show the convergence of $Z^{:n:}_\gamma$ as $\gamma \to 0$. In this section we show a partial result, namely the convergence of $Z^{:n:}_{\gamma, \mathfrak{m}}$ to $Z$ (the stochastic convolution in the $\Phi^4_2$ equation). This $Z^{:n:}_{\gamma, \mathfrak{m}}$ is identical to $Z^{:n:}_{\gamma}$ up until a random time $\tau_{\gamma, \mathfrak{m}}$, beyond which we extend it by modifying first the dynamics of $(\sigma(t, \cdot))_{t \ge 0}$, and equating $Z^{:n:}_{\gamma, \mathfrak{m}}$ to the stochastic convolution from mild formulation of the evolution equation of this new Markov chain.
 
 Thus for a fixed $\nu \in \left(0, \frac{1}{2}\right)$, and $\mathfrak{m} > 1$ and $0 < \gamma < 1$ arbitrary, let us define
 \begin{align}
@@ -618,10 +593,10 @@ where $\mathcal{L}^s_{\gamma, \mathfrak{m}}$ is the infinitesimal generator defi
 
 \begin{remark}
   \label{remark:all_previous_results_hold}
-  For every previously defined process we can define the corresponding modified version, indexed by ${\gamma, \mathfrak{m}}$ instead of $\gamma$, and all previous results and estimates still hold, since they are independent of the jump rates (besides requiring them to be $\le 1$) \cite[p39]{mourrat2015convergencetwodimensionaldynamicisingkac}.
+  For every previously defined process we can define the corresponding modified version, indexed by $_{\gamma, \mathfrak{m}}$ instead of $_\gamma$, and all previous results and estimates still hold, since they are independent of the jump rates (besides requiring them to be $\le 1$) \cite[p39]{mourrat2015convergencetwodimensionaldynamicisingkac}.
 \end{remark}
 
-Even though we have no control on $X_\gamma$ yet, the reason for such a construction was necessary, since later some error bounds will depend on $\norm{X_\gamma(t, \Placeholder)}_{\mathcal{C}^{-\nu}}$, and we want to bound the corresponding terms by $\mathfrak{m}$.
+Even though we have no control on $X_\gamma$ yet, such a construction was necessary, since later some error bounds will depend on $\norm{X_\gamma(t, \Placeholder)}_{\mathcal{C}^{-\nu}}$, and we want to bound the corresponding terms uniformly by $\mathfrak{m}$.
 
 \begin{theorem}[Convergence of $Z_{\gamma,\mathfrak{m}}$, {\cite[Theorem 6.1]{mourrat2015convergencetwodimensionaldynamicisingkac}}]
   Let $\nu \in (0, 1/2)$ and $\mathfrak{m} > 1$. As $\gamma$ tends to $0$, the processes $Z_{\gamma, \mathfrak{m}}$ converge in law to $Z$ with respect to the Skorokhod topology on $\mathcal{D}(\RR_+, \mathcal{C}^{-\nu})$, where $Z$ is the stochastic convolution from the $\Phi^4_2$ equation.
@@ -651,11 +626,11 @@ Even though we have no control on $X_\gamma$ yet, the reason for such a construc
   The remainder of the proof shows the validity of the above theorem for every $\phi \in \mathcal{C}^\infty(\TT^2)$ trigonometric polynomials, which is sufficient according to \cite[Remark C.4]{mourrat2015convergencetwodimensionaldynamicisingkac}
 \end{proof}
 
-As for the joint convergence of $(Z_{\gamma, \mathfrak{m}}^{:1:}, \ldots, Z_{\gamma, \mathfrak{m}}^{:n:})$ in law to $(Z^{:1:}, \ldots, Z^{:n:})$ with respect to the topology of $\mathcal{D}(\mathbb{R}_+, \mathcal{C}^{-\nu})^n$, we can first conclude that since $\mathcal{Z}^{:n:}_\mathfrak{m} = \left\{Z_{\gamma, \mathfrak{m}}^{:n:}, \gamma \in (0, 1/3)\right\}$ is tight, the family $\left\{(Z_{\gamma, \mathfrak{m}}^{:1:}, \ldots, Z_{\gamma, \mathfrak{m}}^{:n:}), \gamma \in (0, 1/3)\right\}$ is tight too with respect to the topolgy of $\mathcal{D}(\mathbb{R}_+, \mathcal{C}^{-\nu})^n$. Hence it suffices to verify the convergence of the finite dimensional distributions, which is equivalent to the convergence 
+As for the joint convergence of $(Z_{\gamma, \mathfrak{m}}^{:1:}, \ldots, Z_{\gamma, \mathfrak{m}}^{:n:})$ in law to $(Z^{:1:}, \ldots, Z^{:n:})$ with respect to the topology of $\mathcal{D}(\mathbb{R}_+, \mathcal{C}^{-\nu})^n$, we can first conclude that since $\mathcal{Z}^{:n:}_\mathfrak{m} = \left\{Z_{\gamma, \mathfrak{m}}^{:n:}, \gamma \in (0, 1/3)\right\}$ is tight, the family $\left\{(Z_{\gamma, \mathfrak{m}}^{:1:}, \ldots, Z_{\gamma, \mathfrak{m}}^{:n:}), \gamma \in (0, 1/3)\right\}$ is tight too with respect to the topolgy of $\mathcal{D}(\mathbb{R}_+, \mathcal{C}^{-\nu})^n$. Hence it suffices to verify the convergence of the finite dimensional distributions, which is equivalent to 
 \begin{align*}
-  \lim_{\gamma \to 0}\abs{\Exp{F(\bf{Z_\gamma(t_1), \ldots, Z_\gamma(t_K)})} - \Exp{F(\bf{Z(t_1), \ldots, Z(t_K)})}}
+  \lim_{\gamma \to 0}\abs{\Exp{F(\bf{Z_\gamma(t_1), \ldots, Z_\gamma(t_K)})} - \Exp{F(\bf{Z(t_1), \ldots, Z(t_K)})}} = 0
 \end{align*}
-for all $K \in \NN$, times $t_1 < t_2 < \ldots < t_K$ and $F: (\mathcal{C}^{-\nu})^{n \times K} \to \mathbb{R}$ bounded and uniformly continuous functions, where $\bf{Z}_\gamma = (Z^{:1:}_{\gamma, \mathfrak{m}}, \ldots, Z^{:n:}_{\gamma, \mathfrak{m}} )$ and $\bf{Z} = (Z^{:1:}, \ldots, Z^{:n:} )$, which is the strategy for the proof of 
+to hold for all $K \in \NN$, times $t_1 < t_2 < \ldots < t_K$ and $F: (\mathcal{C}^{-\nu})^{n \times K} \to \mathbb{R}$ bounded and uniformly continuous functions, where $\bf{Z}_\gamma = (Z^{:1:}_{\gamma, \mathfrak{m}}, \ldots, Z^{:n:}_{\gamma, \mathfrak{m}} )$ and $\bf{Z} = (Z^{:1:}, \ldots, Z^{:n:} )$, which is the strategy for the proof of 
 \begin{theorem}[{\cite[Theorem 6.2]{mourrat2015convergencetwodimensionaldynamicisingkac}}]
   For every $\mathfrak{m} \in \NN$ and $n \in \NN$, the processes $(Z^{:1:}_{\gamma, \mathfrak{m}}, \ldots, Z^{:n:}_{\gamma, \mathfrak{m}} )$ converge (jointly) in law to $(Z^{:1:}, \ldots, Z^{:n:} )$ with respect to the topology of $\mathcal{D}(\RR_+, \mathcal{C}^{-\nu})^n$.
 \end{theorem}
@@ -685,24 +660,22 @@ Now for $\mathfrak{m} \ge 1$ we introduce a new process $X_{\gamma, \mathfrak{m}
     0&\text{otherwise}\,.
   \end{cases} 
 \end{align*}
-We get form a standard ODE argument the existence and uniqueness of this $X_{\gamma, \mathfrak{m}}$ \cite{mourrat2015convergencetwodimensionaldynamicisingkac}, which in particular coincides with $X_\gamma$ on the $\left\{t < \tau_{\gamma, \mathfrak{m}}\right\}$ event. Since $\tau_{\gamma,\mathfrak{m}}$ depends on 
+We get from a standard ODE argument the existence and uniqueness of this $X_{\gamma, \mathfrak{m}}$ \cite{mourrat2015convergencetwodimensionaldynamicisingkac}, which in particular coincides with $X_\gamma$ on the $\left\{t < \tau_{\gamma, \mathfrak{m}}\right\}$ event. The bound on $\norm{\operatorname{Err}^{(1)}(s, \Placeholder)}_{L^\infty(\TT^2)}$ depends (among other variables) on $\norm{X_\gamma(t)}_{\mathcal{C}^{-\nu}}$. Since $\tau_{\gamma, \mathfrak{m}}$ localizes $X_\gamma$ in the $\mathcal{C}^{-\nu}$ norm, we can make this bound independent from $\norm{X_\gamma(t)}_{\mathcal{C}^{-\nu}}$, and in particular the error term is $0$ on $\{t \ge \tau_{\lambda, \mathfrak{m}}\}$ by construction.
 
-\begin{itemize}
-  \item We construct another approximation of $X_\gamma$. For $0 \le t \le T$ we define:$$\overline{X}_{\gamma, \mathfrak{m}}(t, \cdot) = P_t X^0 + Z_{\gamma, \mathfrak{m}}(t, \cdot) + \mathcal{S}_T(Z_{\gamma, \mathfrak{m}}, Z^{:2:}_{\gamma, \mathfrak{m}}, Z_{\gamma, \mathfrak{m}}^{:3:})(t, \cdot)$$where $\mathcal{S}_T$ is the solution operator for some fixed $X^0$ initial datum. 
-  \begin{itemize}
-    \item so here $\overline{X}_{\gamma, \mathfrak{m}}$ is the solution of the following SPDE: $\textcolor{red}{\text{figure this out!}}$ 
-    \item in Lemma 7.2 we have: $\overline{X}_{\gamma, \mathfrak{m}}$ converges to $X$ with respect to $\mathcal{D}([0, T], \mathcal{C}^{-\nu})$, where in particular we use the uniform bounds bounds from Proposition 5.4, so that the paths of $Z_{\gamma, \mathfrak{m}}^{:i:}$ are almost surely bounded. But in the end this is just a use of the continuous mapping theorem
-  \end{itemize}
-  \item Now we want to bound the difference between $\overline{X}_{\gamma, \mathfrak{m}}$ (the result got from the solution operator $\mathcal{S}_T$) and $X_\gamma$ (the process from the evolution equation, we can also eventually consider $X_{\gamma, \mathfrak{m}}$, if it's more advantageous). The main goal of the remaining is to obtain the following bound for every fixed $\mathfrak{m} \ge 1, T > 0$ and bounded uniformly continuous function $F: \mathcal{D}([0, T], \mathcal{C}^{-\nu}) \to \mathbb{R}$: $$\limsup_{\gamma \to 0} \mathbb{E}\left[\lvert F(\overline{X}_{\gamma, \mathfrak{m}}) - F({X}_{\gamma, \mathfrak{m}})\rvert\right] = 0\,.$$Combined with Lemma 7.2 we immediately get the convergence of ${X}_{\gamma, \mathfrak{m}}$ to $X$ in law for every fixed $\mathfrak{m} \ge 1$ (p49). This is proven in Lemmas 7.3, 7.4, 7.5
-\end{itemize}
+We construct another approximation of $X$. For $0 \le t \le T$ let us define
+\begin{align*}
+  \overline{X}_{\gamma, \mathfrak{m}}(t, \cdot) = P_t X^0 + Z_{\gamma, \mathfrak{m}}(t, \cdot) + \mathcal{S}_T(Z_{\gamma, \mathfrak{m}}, Z^{:2:}_{\gamma, \mathfrak{m}}, Z_{\gamma, \mathfrak{m}}^{:3:})(t, \cdot)
+\end{align*}
+where $\mathcal{S}_T$ is the solution operator of the $\Phi^4_2$ equation from \fullref{chapter:solution_theory_of_phi_4_2} for our fixed $X^0$ initial datum. As a reminder, we can write for $t \in [0, T]$ \begin{align*}
+  X(t, \Placeholder) = P_t X^0(\Placeholder) + Z(t, \Placeholder) + \mathcal{S}_T(Z, Z^{:2:}, Z^{:3:})(t, \Placeholder)\,.
+\end{align*} 
+But since the solution operator is uniform countinuity on bounded sets and $(Z_{\gamma, \mathfrak{m}}, Z^{:2:}_{\gamma, \mathfrak{m}}, Z_{\gamma, \mathfrak{m}}^{:3:})$ converges in law jointly to $(Z, Z^{:2:}, Z^{:3:})$, we get that $\overline{X}_{\gamma, \mathfrak{m}} \DConv X$ with respect to $\mathcal{D}([0, T], \mathcal{C}^{-\nu})$ \cite[Lemma 7.2]{mourrat2015convergencetwodimensionaldynamicisingkac}.
 
-\chapter{Remarks}
-\section{Points to observe}
-\begin{itemize}
-  \item for parameter $\kappa$ we only require arbitrary $> 0$, but form the type of estimates we get actually only $\kappa \in (0, 1)$ would make sense.
-  \item we often restrict ourselves to $\gamma \in (0, \gamma_0)$, where $\gamma_0$ is coming from Lemma 8.2 and Proposition 4.2
-\end{itemize}
-
+The remainder of Section 7. in \cite{mourrat2015convergencetwodimensionaldynamicisingkac} is about constructing different bounds to show that for every fixed $\mathfrak{m} \ge 1$, $T > 0$ and bounded uniformly continuous function $F: \mathcal{D}([0, T], \mathcal{C}^{-\nu}) \to \RR$ we have
+\begin{align*}
+  \limsup_{\gamma \to 0} \Exp{\abs{F(\overline{X}_{\gamma, \mathfrak{m}} - F(X_{\gamma, \mathfrak{m}}))}} = 0\,,
+\end{align*}
+which together with the previous result implies the convergence in law of $X_{\gamma, \mathfrak{m}}$ to $X$ for every fixed $\mathfrak{m} \ge 1$ with respect to $\mathcal{D}([0, T], \mathcal{C}^{-\nu})$. What remains is to extend this convergence to with respect to $\mathcal{D}([0, T], \mathcal{C}^{-\nu})$ and to remove the stopping time $\tau_{\gamma, \mathfrak{m}}$ \say{by a soft argument} \cite{mourrat2015convergencetwodimensionaldynamicisingkac}, which ensures the converence of $X_\gamma$ to $X$ in law with respect to $\mathcal{D}([0, T], \mathcal{C}^{-\nu})$.
 \medskip
 % \newpage
 % Bibliography can go on the same page with the appendix.
